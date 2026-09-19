@@ -186,11 +186,9 @@ A major requirement of the system is the ability to handle different types of in
 After extraction, the document content is processed so that relevant information can be retrieved efficiently. The text is divided into meaningful chunks and converted into numerical vector representations using semantic embeddings. These representations allow the system to identify content that is conceptually related to a user's query, even when the exact words used in the query are not present in the document. The resulting vectors can be stored in a vector-based knowledge or retrieval system. When a user asks a question, the question is represented in the same semantic space and the system retrieves document sections that are most relevant to the query. This retrieval mechanism forms an important part of LexiClear because the objective is not simply to generate a fluent response, but to connect the response with information contained in the uploaded document.
 
 \subsection{Retrieval-Augmented Generation}
-
 LexiClear uses Retrieval-Augmented Generation as the primary approach for generating document-grounded explanations. In a conventional generative AI interaction, a language model may generate an answer based largely on information learned during training. Such an approach can be unsuitable for document-specific questions because the response may contain information that is not present in the uploaded document. The RAG approach addresses this issue by retrieving relevant document content before generating the response. The retrieved information is supplied as context to the generation process, allowing the response to remain more closely connected to the source document. The earlier design identified RAG, semantic retrieval, embeddings, and vector storage as important components of the system, while the current implementation builds additional functionality around this foundation.
 
 \section{Structured Document Analysis}
-
 The system development extends LexiClear from a document-analysis prototype into a more interactive document-understanding and accessibility-oriented system. Instead of providing only a static summary, the current workflow supports structured analysis of the uploaded document. The system can organize relevant information into categories such as summary, key clauses, risks, obligations, rights, and required actions. Such structured presentation can help users focus on the parts of a document that are likely to be important to them without requiring them to manually examine every section of a lengthy document.
 
 \section{Ask LexiClear}
@@ -438,16 +436,16 @@ The development of LexiClear resulted in an integrated prototype for processing 
 The results presented in this chapter focus primarily on the functional behavior of the developed system. Since a large expert-labelled dataset and controlled quantitative evaluation have not yet been established, the results are described in terms of available document inputs, experimental setup, and functional observations rather than numerical accuracy or performance metrics.
 
 \section{Dataset}
-LexiClear is designed to process legal and administrative PDF documents rather than depending on a single fixed dataset. Such documents may include rental agreements and other formal documents containing clauses, conditions, obligations, rights, responsibilities, and potential risks.
 
-The documents used during development and functional testing provide examples of the type of content for which the system is intended. A rental agreement was used during testing of the document-analysis workflow, allowing the system to process document content and generate structured information from it.
+LexiClear is designed to process legal and administrative PDF documents rather than depending on a single fixed dataset. During development and functional evaluation, three legal documents were used to represent different document-understanding scenarios: an employment-related document, a Simple Mortgage Deed, and a Leave and License Agreement. These documents contain clauses, conditions, obligations, rights, responsibilities, financial terms, restrictions, and other information relevant to document-based question answering.
 
-The document-processing pipeline supports both digital PDFs and scanned or image-based PDFs. For digital documents, text can be extracted directly from the PDF, while OCR is used when the document contains scanned or image-based content. The extracted information is subsequently divided into chunks and represented using semantic embeddings.
+For evaluating the Ask LexiClear functionality, question-answer datasets were prepared in CSV format from the documents used during testing. Each CSV file contains two fields: \texttt{question} and \texttt{expected\_answer}. The questions are designed to test whether the system can retrieve and provide information corresponding to specific clauses and details present in the source document.
 
-The processed document chunks and their associated metadata form the searchable knowledge representation used by the retrieval system. Metadata can include information such as the source document, page number, section, and other available document-location details.
+The first dataset,\texttt{qa\_test.csv},contains 20 question-answer pairs based on employment-related legal document.The second dataset, \texttt{mortgage\_deed\_qa\_test.csv}, contains 20 question-answer pairs based on the Simple Mortgage Deed. The third dataset, \newline \texttt{leave\_license\_agreement\_qa\_test.csv}, contains 20 question-answer pairs based on the Leave and License Agreement. Together, these datasets provide 60 document-specific question-answer pairs for functional evaluation of the document-question-answering workflow.
 
-The dataset used for development is therefore representative of the intended document-processing scenario rather than a formally curated benchmark dataset. An expert-labelled dataset containing ground-truth summaries, obligations, risks, rights, and question-answer pairs has not been established at this stage. Consequently, the system is not evaluated using claims such as classification accuracy, precision, recall, or F1-score.
+The document-processing pipeline supports both digital PDFs and scanned or image-based PDFs. For digital documents, text can be extracted directly from the PDF, while OCR is used when the document contains scanned or image-based content. The extracted information is subsequently divided into chunks and represented using semantic embeddings. The processed document chunks and their associated metadata form the searchable knowledge representation used by the retrieval system. Metadata can include information such as the source document, page number, section, and other available document-location details.
 
+The QA datasets are therefore used as functional evaluation data rather than as a formally curated legal benchmark. The expected answers represent information extracted from the corresponding source documents and are used to compare the responses generated by LexiClear during testing. The datasets do not constitute expert-annotated ground truth for legal interpretation. Consequently, the evaluation is focused on functional document-based question answering rather than claims of legal accuracy, and metrics such as classification accuracy, precision, recall, or F1-score are not used unless a formal expert-annotated evaluation dataset is established.
 \section{Experimental setup}
 The experimental setup consists of the major software components required to implement and test the LexiClear workflow. The system follows a client-server architecture in which the frontend provides the user interface and communicates with the backend through defined endpoints.
 
@@ -549,6 +547,19 @@ The integration of semantic retrieval with RAG allows the generated response to 
 
 The result demonstrates the functional integration of the retrieval and generation stages. However, a formal evaluation using an expert-labelled question-answer dataset has not been conducted. Therefore, numerical measures such as retrieval accuracy, precision, recall, or answer-generation accuracy are not reported.
 
+\subsection{Question-Answer Evaluation Results}
+
+The Ask LexiClear functionality was evaluated using document-specific question-answer datasets prepared from the legal documents used during functional testing. Three CSV datasets were created for this evaluation, with each dataset containing a question and its corresponding expected answer. The datasets cover an employment-related document, a Simple Mortgage Deed, and a Leave and License Agreement.
+
+The employment-related QA dataset contains 20 question-answer pairs, while the Simple Mortgage Deed and Leave and License Agreement datasets contain 20 question-answer pairs each. Therefore, a total of 60 document-specific questions were prepared for evaluating the question-answering workflow. The questions cover information such as obligations, rights, financial terms, conditions, restrictions, termination provisions, and other document-specific details.
+
+During testing, each question can be submitted through the Ask LexiClear interface after the corresponding document has been processed. The system retrieves relevant document chunks and uses the retrieved context during response generation. The generated response can then be compared with the corresponding expected answer in the QA dataset to determine whether the required information has been retrieved and presented appropriately.
+
+The QA datasets provide a structured method for functional evaluation of document-grounded question answering. They also allow different types of legal documents to be tested using questions derived from their actual contents rather than using unrelated general-purpose questions. This helps verify the integration between document processing, semantic retrieval, and RAG-based response generation.
+
+
+
+
 \subsection{Jurisdiction Grounding Results}
 The jurisdiction grounding component was integrated into the response-generation workflow. The selected jurisdictional context can be passed along with the retrieved document information before the response is generated.
 
@@ -582,7 +593,6 @@ At the same time, the current evaluation has limitations. A large expert-annotat
 
 LexiClear was developed as an AI-assisted legal and administrative document-understanding system aimed at making complex formal documents easier for non-expert users to access and understand. The system combines document processing, semantic retrieval, Retrieval-Augmented Generation (RAG), jurisdiction grounding, structured analysis, multilingual translation, and text-to-speech within a single workflow. This integration addresses the difficulty users may face when locating and understanding important information such as clauses, obligations, rights, risks, and required actions in lengthy legal and administrative documents.
 
-The developed system supports both digital and scanned PDF documents through direct text extraction and Optical Character Recognition (OCR). The extracted content is preprocessed, divided into meaningful chunks, converted into semantic embeddings, and stored for retrieval. When document analysis or a user question is submitted, relevant document content is retrieved and supplied to the RAG-based generation component. This allows responses to be generated using information associated with the uploaded document rather than relying only on general language-model knowledge.
 
 The system also incorporates jurisdiction grounding to provide additional contextual information during response generation. The structured analysis functionality organizes generated information into categories such as summary, key clauses, risks, obligations, rights, and required actions. Through the Ask LexiClear facility, users can further interact with the processed document by submitting specific questions and obtaining document-grounded responses.
 
@@ -590,7 +600,7 @@ Accessibility is further supported through multilingual output in English, Hindi
 
 The project also has limitations that should be considered when interpreting the results. The available testing does not constitute a large-scale quantitative evaluation, and an expert-annotated benchmark dataset has not yet been established. Therefore, the system's performance cannot be represented through formal accuracy, precision, recall, translation-quality, or similar statistical measures at this stage. In addition, jurisdiction grounding and generated explanations depend on the quality and availability of the configured contextual information.
 
-Overall, LexiClear demonstrates the feasibility of combining document processing, semantic retrieval, RAG, contextual grounding, multilingual processing, and speech-based interaction to improve access to complex legal and administrative information. The system is intended as a document comprehension and information-access aid, rather than a replacement for qualified legal advice or authoritative legal interpretation. Future development can focus on stronger source and clause-level traceability, broader jurisdiction-specific resources, additional Indian languages, voice-based input, document comparison, expert-annotated evaluation datasets, and more comprehensive usability and performance testing
+Overall, LexiClear demonstrates the feasibility of combining document processing, semantic retrieval, RAG, contextual grounding, multilingual processing, and speech-based interaction to improve access to complex legal and administrative information. The system is intended as a document comprehension and information-access aid, rather than a replacement for qualified legal advice or authoritative legal interpretation. Future development can focus on stronger source and clause-level traceability, broader jurisdiction-specific resources, additional Indian languages, voice-based input, document comparison, expert-annotated evaluation datasets, and more comprehensive usability and performance testing.
 \bibliographystyle{unsrt} 
 \bibliography{ref}  
 \end{document}
