@@ -1,5 +1,5 @@
-    \documentclass[12pt,a4paper,oneside]{report}
-
+\documentclass[12pt,a4paper,oneside]{report}
+\newcommand{\at}{\kern-0.08em @\kern-0.08em}
 \usepackage[left=1.25in,right=1in,top=1in,bottom=1in]{geometry}
 \usepackage{titlesec}
 \usepackage{setspace}
@@ -9,9 +9,18 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{caption}
+\DeclareCaptionFont{ten}{\fontsize{10}{12}\selectfont}
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
- \usepackage{amsmath} 
+\usepackage{amsmath} 
+\usepackage{longtable}
+\usepackage{needspace}
+\usepackage{array}
+
+\usepackage[font={footnotesize,bf}, labelfont=bf, labelsep=colon,
+            justification=centering, singlelinecheck=true]{caption}
+\captionsetup[table]{position=above, skip=6pt}
+\captionsetup[figure]{position=below, skip=6pt}
 
 \emergencystretch=3em
 \onehalfspacing
@@ -19,6 +28,34 @@
 \setlength{\headheight}{14pt}
 \setlength{\headsep}{25pt}
 \setlength{\footskip}{25pt}
+
+\usepackage{titlesec}
+
+
+
+
+% Chapter: "CHAPTER N" at 16pt, title at 18pt, both bold and centred
+\titleformat{\chapter}[display]
+  {\centering\bfseries}
+  {\fontsize{16}{19}\selectfont\MakeUppercase{\chaptertitlename}\ \thechapter}
+  {14pt}
+  {\fontsize{18}{22}\selectfont}
+\titlespacing*{\chapter}{0pt}{19pt}{19pt}   % before, after (see position note below)
+
+% Unnumbered chapters (Abstract, Contents, List of Figures/Tables, Bibliography)
+\titleformat{name=\chapter,numberless}[block]
+  {\centering\bfseries\fontsize{17.28}{21}\selectfont}{}{0pt}{}
+\titlespacing*{\chapter}{0pt}{22pt}{18pt}
+
+% Section (1.1, 1.2 ...): 16pt
+\titleformat{\section}
+  {\fontsize{16}{19}\selectfont\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{26pt}{12pt}
+
+% Subsection (1.1.1 ...): 14pt
+\titleformat{\subsection}
+  {\fontsize{14}{17}\selectfont\bfseries}{\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0pt}{24pt}{8pt}
 
 \titleformat{\chapter}[display]
   {\normalfont\bfseries\Large\centering} % formatting
@@ -33,24 +70,28 @@
 \pagestyle{fancy}
 \fancyhf{}
 
-\fancyhead[R]{\textit{Short Title}}
 
+
+\fancyhead[R]{\textit{Short Title}}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyfoot{}                                  % clear the old footer
 \fancyfoot[L]{AY 2026-27}
-\fancyfoot[C]{Department of Computer Science and Engineering}
+\fancyfoot[C]{Department of CSE (AI\&ML)}     % note the space before (AI&ML)
 \fancyfoot[R]{Page \thepage}
+\renewcommand{\footrulewidth}{0.4pt}          % keep whatever your existing rule width is
 
 \renewcommand{\headrulewidth}{0.8pt}
 \renewcommand{\footrulewidth}{0.8pt}
 
 % Apply header/footer on chapter starting pages
-\fancypagestyle{plain}{
+\fancypagestyle{plain}{%
   \fancyhf{}
-  \fancyhead[R]{\textit{Short Title}}
   \fancyfoot[L]{AY 2026-27}
-  \fancyfoot[C]{Department of Computer Science and Engineering}
+  \fancyfoot[C]{Department of CSE (AI\&ML)}
   \fancyfoot[R]{Page \thepage}
-  \renewcommand{\headrulewidth}{0.8pt}
-  \renewcommand{\footrulewidth}{0.8pt}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0.4pt}
 }
 
 % -----------------------------
@@ -89,21 +130,11 @@
 \pagestyle{frontmatter}
   \begin{spacing}{1.65}
 
-If words are considered tokens of acknowledgement, then they play a heraldic role,expressing our gratitude.
+It is our pleasure to express our heartfelt thanks to Dr. Pradeep Udupa, Associate Professor, Department of CSE(AIML), for his supervision and guidance which enabled us to understand and develop this project.
 
-With proud gratitude,we thank God Almighty for all the blessings showered on us and for completing our project successfully.
+We are indebted to Dr.\ Chanchal Antony, Head of the Department of CSE(AIML), and Dr.\ Ashok Kumar T, Principal, for their advice and suggestions at various stages of the work. We also extend our thanks to Dr.\ A.J.\ Shetty, Hon'ble President of Laxmi Memorial Education Trust, Mr.\ Prashanth Shetty, Vice-President and Dr.\ Jayaprakash Rao, Campus Director for providing us with a good learning environment, library and laboratory facilities.
 
-We extend our heartfelt gratitude to the Management of \textbf{A. J. Institute of Engineering and Technology},a unit of \textbf{Laxmi Memorial Education Trust},for their unwavering support throughout our project journey.
-
-We owe our gratitude to The Principal, \textbf{Dr.Ashok Kumar T} for his whole-hearted support and for his kind permission to undertake the project.
-
-We are indebted to the Dean Academics, \textbf{Mr.Mahabaleshwarappa P}, for his guidance and invaluable suggestions, steered us towards a greater insight and understanding.
-
-We wish to express our deepest gratitude to \textbf{Dr.Chanchal Antony}, Head of Department, Computer Science and Engineering(Artificial Intelligence \& Machine Learning), AJIET, for his profound alacrity in our project and his valuable suggestions. 
-
-We wish to enunciate our special thanks to our paradigmatic and relevant \textbf{Project Coordinator}, \textbf{Dr.Vineetha Pais},Associate Professor,and the internal guide \textbf{Dr.Pradeep Udupa}, Associate Professor,Department of Computer Science and Engineering(Artificial Intelligence \& Machine Learning),AJIET,who guided us throughout our project period with their valuable suggestions and for devoting their precious time in making this project a success.
-
-Finally, We offer our sincere thanks to our family members and friends for their valuable suggestions,encouragement,and unwavering support.
+We appreciate the help and the support rendered by the teaching and non-teaching staff of Department of CSE(AIML). Lastly, we take this opportunity to offer our regards to all of those who have supported us directly or indirectly in the successful completion of this project work.
 
 
 \begin{flushright}
@@ -2837,6 +2868,474 @@ The functional testing demonstrates that the major components of LexiClear have 
 
 At the same time, the current evaluation has limitations. A large expert-annotated dataset, controlled benchmark experiments, and systematic evaluation of retrieval, generation, translation, and speech quality have not yet been completed. Therefore, the results presented here are functional and integration-based results rather than statistical performance results. Future evaluation can strengthen the system assessment by using expert-annotated legal documents, predefined test questions, source-grounding measurements, multilingual evaluation, and user-based usability studies.
 
+\chapter{Software Testing}
+
+\section{Introduction}
+Software testing verifies that the implemented system behaves as specified and helps to identify the areas in which its behaviour does not yet meet the expected result. This chapter presents a module-wise functional test suite for LexiClear. The suite contains 42 test cases that cover ten functional modules: document upload, document analysis, key clause extraction, rights and obligations extraction, risk analysis, jurisdictional context, Ask LexiClear (RAG), multilingual support, text-to-speech, and system performance and error handling.
+
+Each test case is described by a Test Case ID, a Test Scenario, an Expected Result, an Actual Result, and a Status. The scenarios follow the functionality described in the earlier chapters of this report and introduce no additional system features. Where the earlier chapters document an observed outcome, the Actual Result column refers to the section that reports it. Where Chapter~4 reports measured retrieval and question-answering values, those values are reproduced as recorded.
+
+\textbf{Provisional status of the results.} The pass and fail entries in this chapter are draft test results. They are provisional entries retained for review and have not been verified through recorded test execution. Statuses are therefore provisional, and entries beginning with ``Draft entry'' must be confirmed against an execution record before they are reported as verified results. This chapter does not claim that these results are experimentally verified.
+
+\textbf{Testing in this report.} The test cases of the project are presented only in this chapter. Chapter~4 reports the experimental results and the overall discussion (Section~4.3). Where Chapter~4 records an observed outcome or a measured value, the Actual Result column refers to the section that reports it. Where a test in this chapter covers functionality for which Chapter~4 records no observed outcome, such as OCR processing, invalid-file handling, Hindi output, and the Listen and Stop controls, the entry is a provisional draft that is to be validated.
+
+\section{Functional Testing}
+Functional testing examines each module of LexiClear against its expected behaviour. The test cases for each module are listed in Tables~7.1 to~7.10. In every table, PASS and FAIL denote provisional statuses that are pending validation.
+\needspace{18\baselineskip}
+\subsection{Document Upload Module}
+Table~\ref{tab:upload} lists the 4 test cases for this module (TC01 to TC04). Provisionally, 3 passed and 1 failed.
+{\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.085\linewidth}
+                     >{\raggedright\arraybackslash}p{0.225\linewidth}
+                     >{\raggedright\arraybackslash}p{0.25\linewidth}
+                     >{\raggedright\arraybackslash}p{0.265\linewidth}
+                     >{\raggedright\arraybackslash}p{0.09\linewidth}@{}}
+\caption{Test Cases for Document Upload Module (Provisional Results)}\label{tab:upload}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endfirsthead
+\multicolumn{5}{c}{\tablename~\thetable{} (continued)}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endhead
+\hline
+\multicolumn{5}{r}{\emph{Continued on next page}}\\
+\endfoot
+\hline
+\endlastfoot
+TC01 & Upload of a valid digital legal PDF (a rental agreement) through the frontend upload interface & The document is accepted by the interface and passed to the backend for processing & The document was accepted through the upload interface and passed to the backend (Section~4.3.1) & \textbf{PASS}\\
+\hline
+TC02 & Upload of a scanned or image-based PDF that requires OCR & Text is obtained through OCR and the document enters the normal processing workflow & Draft entry: OCR text was obtained and the document entered the processing workflow. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC03 & Upload of an unsupported file type or a corrupted PDF & The validation stage does not pass the file to extraction or OCR (Section~3.2.1) and the interface indicates that the file cannot be processed & Draft entry: the file was not passed to extraction and a message was shown. To be validated; the exact message is to be recorded & \textbf{PASS}\\
+\hline
+TC04 & Upload of a scanned PDF of low image quality & OCR produces text complete enough for reliable preprocessing, chunking, and retrieval & Draft entry: extracted text was incomplete for the low-quality scan. This is consistent with the OCR limitation stated in Section~5.1. To be validated & \textbf{FAIL}\\
+\end{longtable}
+}
+
+Test cases TC01 to TC04 examine the entry point of the workflow. TC01 and TC02 check that a digital PDF and a scanned PDF are both accepted, the second depending on OCR. TC03 checks that the validation stage described in Section~3.2.1 stops an unsupported or corrupted file from reaching extraction. TC04 checks the quality of the text obtained from a low-quality scan. Its provisional failure is consistent with the OCR limitation in Section~5.1: extraction errors can affect preprocessing, chunking, retrieval, and response generation, so every later module depends on this stage.
+
+The testing of the Document Upload Module also highlights the importance of validating document quality and format before initiating further processing. The system is expected to distinguish between digitally generated PDFs and scanned documents that require Optical Character Recognition (OCR). Proper validation helps prevent unsupported or unreadable files from entering the analysis pipeline. The results also indicate that document quality can influence the accuracy of text extraction and subsequent legal document analysis. Therefore, upload validation and OCR performance are important factors in ensuring the reliability of LexiClear.
+\needspace{18\baselineskip}
+\subsection{Document Analysis Module}
+Table~\ref{tab:analysis} lists the 4 test cases for this module (TC05 to TC08). Provisionally, 3 passed and 1 failed.
+{\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.085\linewidth}
+                     >{\raggedright\arraybackslash}p{0.225\linewidth}
+                     >{\raggedright\arraybackslash}p{0.25\linewidth}
+                     >{\raggedright\arraybackslash}p{0.265\linewidth}
+                     >{\raggedright\arraybackslash}p{0.09\linewidth}@{}}
+\caption{Test Cases for Document Analysis Module (Provisional Results)}\label{tab:analysis}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endfirsthead
+\multicolumn{5}{c}{\tablename~\thetable{} (continued)}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endhead
+\hline
+\multicolumn{5}{r}{\emph{Continued on next page}}\\
+\endfoot
+\hline
+\endlastfoot
+TC05 & Request structured analysis of the processed rental agreement through the backend analysis endpoint & Output is organised into summary, key clauses, risks, obligations, rights, and required actions, where applicable & The endpoint returned structured information for the document (Section~4.3.2) & \textbf{PASS}\\
+\hline
+TC06 & Generation of the document summary section & A summary conveying the purpose and main content of the document is generated and grounded in the uploaded document & Draft entry: a document-grounded summary was displayed. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC07 & Generation of the required actions section & Actions that the user must complete are listed where the document specifies them & Draft entry: required actions were listed for the tested document. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC08 & Analysis of a lengthy document containing many clauses & Every analysis category is populated and consistent with the document content & Draft entry: coverage of the categories was not uniform for the lengthy document. Category correctness was not assessed by experts (Section~4.3.2). To be validated & \textbf{FAIL}\\
+\end{longtable}
+}
+
+Test cases TC05 to TC08 examine the structured analysis produced after a document has been processed. TC05 checks that the output is organised into its categories, while TC06 and TC07 check the summary and the required actions individually. TC08 checks whether every category is populated for a lengthy document with many clauses. Its provisional failure reflects the limitation that the correctness of the analysis was not assessed by experts, so the generated analysis may require verification against the original document (Section~5.1). The four cases therefore cover the presence of each output category and the behaviour of the analysis on a longer document, and not the legal correctness of its content, which the functional tests do not establish.
+\needspace{18\baselineskip}
+\subsection{Key Clause Extraction Module}
+Table~\ref{tab:clause} lists the 3 test cases for this module (TC09 to TC11). Provisionally, 2 passed and 1 failed.
+{\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.085\linewidth}
+                     >{\raggedright\arraybackslash}p{0.225\linewidth}
+                     >{\raggedright\arraybackslash}p{0.25\linewidth}
+                     >{\raggedright\arraybackslash}p{0.265\linewidth}
+                     >{\raggedright\arraybackslash}p{0.09\linewidth}@{}}
+\caption{Test Cases for Key Clause Extraction Module (Provisional Results)}\label{tab:clause}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endfirsthead
+\multicolumn{5}{c}{\tablename~\thetable{} (continued)}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endhead
+\hline
+\multicolumn{5}{r}{\emph{Continued on next page}}\\
+\endfoot
+\hline
+\endlastfoot
+TC09 & Identification of key clauses in the rental agreement, such as duration, payment, and termination conditions & The key clauses are identified and presented in the key clauses section & Draft entry: key clauses were identified and displayed. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC10 & Presentation of an identified clause in simplified language & The clause is explained in language that a non-specialist user can follow while preserving its meaning & Draft entry: clauses were presented in simplified wording. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC11 & Traceability of an extracted clause to its source clause or section in the document & The source clause or section supporting each extracted clause is indicated to the user & Draft entry: no source reference was shown with the extracted clause. Source and clause-level traceability is identified as future work (Section~5.2) & \textbf{FAIL}\\
+\end{longtable}
+}
+
+Test cases TC09 to TC11 examine the key clause identification described in the methodology. TC09 checks that important clauses, such as duration, payment, and termination conditions, are identified. TC10 checks that each clause is explained in language that a non-specialist user can follow without losing its meaning. TC11 checks whether the user can trace an extracted clause to its source clause or section. Source and clause-level traceability is listed as future work in Section~5.2, which is why this case is provisionally marked as failed. Together, the three cases separate what is identified, how it is explained, and whether it can be verified. These cases are not intended to measure legal correctness. They verify that the clause section exists and is understandable, and they identify traceability as the area that needs further development before a user can check the clauses against the source. As TC11 is the only provisionally failed case in this module, the provisional pass rate of the module is 66.67\%.
+
+The results of this module emphasize that extracting key clauses alone is not sufficient; users must also be able to understand and verify the information presented. Providing clear explanations in simplified language helps users interpret important contractual terms without requiring extensive legal knowledge. In addition, linking each extracted clause to its original location in the document improves transparency and makes verification easier. The failure observed in TC11 highlights the need to strengthen source-level traceability so that users can identify where each extracted clause originates. Improving this aspect would make the clause extraction process more reliable, understandable, and useful for legal document analysis.
+
+\needspace{18\baselineskip}
+\subsection{Rights and Obligations Extraction Module}
+Table~\ref{tab:rights} lists the 4 test cases for this module (TC12 to TC15). Provisionally, 3 passed and 1 failed.
+{\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.085\linewidth}
+                     >{\raggedright\arraybackslash}p{0.225\linewidth}
+                     >{\raggedright\arraybackslash}p{0.25\linewidth}
+                     >{\raggedright\arraybackslash}p{0.265\linewidth}
+                     >{\raggedright\arraybackslash}p{0.09\linewidth}@{}}
+\caption{Test Cases for Rights and Obligations Extraction Module (Provisional Results)}\label{tab:rights}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endfirsthead
+\multicolumn{5}{c}{\tablename~\thetable{} (continued)}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endhead
+\hline
+\multicolumn{5}{r}{\emph{Continued on next page}}\\
+\endfoot
+\hline
+\endlastfoot
+TC12 & Extraction of the rights available to each party in the agreement & The rights are listed in the rights section & Draft entry: rights were listed for the tested document. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC13 & Extraction of the obligations of each party in the agreement & The obligations are listed in the obligations section & Draft entry: obligations were listed for the tested document. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC14 & Separation of the responsibilities of different parties, such as landlord and tenant & Rights and obligations are attributed to the correct party & Draft entry: responsibilities were attributed to the parties in the tested document. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC15 & Extraction of obligations that are subject to exceptions or cross-references & Conditions, exceptions, and cross-referenced provisions are captured together with the obligation & Draft entry: conditional parts of some obligations were not captured. To be validated & \textbf{FAIL}\\
+\end{longtable}
+}
+
+Test cases TC12 to TC15 examine the rights and obligations sections. TC12 and TC13 check that rights and obligations are listed, and TC14 checks that they are attributed to the correct party, such as the landlord or the tenant in a rental agreement. TC15 checks obligations that are subject to exceptions or cross-references, where the condition must be captured together with the obligation. Its provisional failure indicates that conditional parts of an obligation may be missed, so the listed obligations should be read together with the original clauses. These cases are limited to the information stated in the document. They do not assess whether a right or an obligation is legally enforceable, which the functional tests do not establish. As only TC15 is provisionally failed, the provisional pass rate of this module is 75.00\%, as shown in Table~\ref{tab:test-summary}.
+\needspace{18\baselineskip}
+\subsection{Risk Analysis Module}
+Table~\ref{tab:risk} lists the 4 test cases for this module (TC16 to TC19). Provisionally, 3 passed and 1 failed.
+{\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.085\linewidth}
+                     >{\raggedright\arraybackslash}p{0.225\linewidth}
+                     >{\raggedright\arraybackslash}p{0.25\linewidth}
+                     >{\raggedright\arraybackslash}p{0.265\linewidth}
+                     >{\raggedright\arraybackslash}p{0.09\linewidth}@{}}
+\caption{Test Cases for Risk Analysis Module (Provisional Results)}\label{tab:risk}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endfirsthead
+\multicolumn{5}{c}{\tablename~\thetable{} (continued)}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endhead
+\hline
+\multicolumn{5}{r}{\emph{Continued on next page}}\\
+\endfoot
+\hline
+\endlastfoot
+TC16 & Identification of risks and conditions in the document & Risks and conditions stated in the document are listed in the risks section & Draft entry: risks and conditions were listed for the tested document. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC17 & Identification of restrictions and penalty-related provisions & Restrictions and penalty-related provisions present in the document are highlighted & Draft entry: restrictions and penalty-related provisions were highlighted. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC18 & Analysis of a document that states no explicit risk provisions & The risks section does not present unsupported risks and indicates that none apply, where applicable & Draft entry: no unsupported risk was presented. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC19 & Consistency of the identified risks with an expert legal assessment & The identified risks agree with the assessment of a qualified legal reviewer & Draft entry: expert comparison was not available. Generated risks may require verification against the original document (Section~5.1) & \textbf{FAIL}\\
+\end{longtable}
+}
+
+Test cases TC16 to TC19 examine the risks and conditions section. TC16 and TC17 check that risks, conditions, restrictions, and penalty-related provisions that appear in the document are listed or highlighted. TC18 checks the opposite case, a document without explicit risk provisions, where the section should not present unsupported risks. TC19 checks agreement with a qualified legal reviewer. It is provisionally marked as failed because no expert comparison was available, and Section~5.1 notes that generated risks may require verification against the original document. The risk section should be read as an aid to attention and not as a legal opinion. It points the reader to provisions that may need closer reading, and the system is intended as an information-access aid and not as a substitute for professional legal advice (Section 5.1).
+
+The testing of the Risk Analysis Module focuses on the system's ability to identify potentially unfavorable conditions and highlight provisions that may require additional attention. By examining risks, restrictions, penalties, and other relevant clauses, LexiClear helps users become more aware of possible concerns within a legal document. The module also considers cases where no explicit risks are present, ensuring that the system does not unnecessarily generate unsupported warnings. However, automated risk identification should be treated as an initial assessment rather than a final legal opinion. The failure observed in TC19 highlights the importance of comparing identified risks with expert legal assessments. Further improvement in this area can enhance the accuracy and reliability of risk analysis while maintaining the need for professional legal verification.
+
+\needspace{18\baselineskip}
+\subsection{Jurisdictional Context Module}
+Table~\ref{tab:juris} lists the 4 test cases for this module (TC20 to TC23). Provisionally, 3 passed and 1 failed.
+{\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.085\linewidth}
+                     >{\raggedright\arraybackslash}p{0.225\linewidth}
+                     >{\raggedright\arraybackslash}p{0.25\linewidth}
+                     >{\raggedright\arraybackslash}p{0.265\linewidth}
+                     >{\raggedright\arraybackslash}p{0.09\linewidth}@{}}
+\caption{Test Cases for Jurisdictional Context Module (Provisional Results)}\label{tab:juris}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endfirsthead
+\multicolumn{5}{c}{\tablename~\thetable{} (continued)}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endhead
+\hline
+\multicolumn{5}{r}{\emph{Continued on next page}}\\
+\endfoot
+\hline
+\endlastfoot
+TC20 & Submission of a request with the configured jurisdictional context enabled & The jurisdictional context is passed together with the retrieved document information before the response is generated & Integration of jurisdictional context into response generation was demonstrated (Section~4.3.5) & \textbf{PASS}\\
+\hline
+TC21 & Submission of a request when no jurisdictional context is configured & The response is generated from the document content without jurisdictional information & Draft entry: the response was generated from the document content only. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC22 & Inclusion of jurisdictional context in the structured analysis output & The analysis output incorporates the configured jurisdictional information where relevant & Draft entry: jurisdictional information appeared in the analysis output. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC23 & Jurisdiction-specific legal accuracy of a generated response & The response is consistent with the legal sources of the selected jurisdiction & Draft entry: accuracy was not established. Jurisdiction-specific legal accuracy was not evaluated (Sections~4.3.5 and~5.1) & \textbf{FAIL}\\
+\end{longtable}
+}
+
+Test cases TC20 to TC23 examine jurisdiction grounding. TC20 checks that the jurisdictional context is combined with the retrieved document information before a response is generated (Section~4.3.5). TC21 checks that a response is still produced from the document when no context is configured, and TC22 checks that the analysis output includes the jurisdictional information where it is relevant. TC23 checks legal accuracy for a selected jurisdiction. It is provisionally marked as failed because jurisdiction grounding was evaluated from an integration perspective and no benchmark for jurisdiction-specific accuracy was used (Section~5.1). The jurisdiction cases therefore confirm that the context is passed through the workflow, while the accuracy of the resulting jurisdiction-specific statements remains open for future evaluation (Section~5.2).
+\needspace{18\baselineskip}
+\subsection{Ask LexiClear -- RAG Module}
+Table~\ref{tab:rag} lists the 6 test cases for this module (TC24 to TC29). Provisionally, 4 passed and 2 failed.
+{\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.085\linewidth}
+                     >{\raggedright\arraybackslash}p{0.225\linewidth}
+                     >{\raggedright\arraybackslash}p{0.25\linewidth}
+                     >{\raggedright\arraybackslash}p{0.265\linewidth}
+                     >{\raggedright\arraybackslash}p{0.09\linewidth}@{}}
+\caption{Test Cases for Ask LexiClear -- RAG Module (Provisional Results)}\label{tab:rag}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endfirsthead
+\multicolumn{5}{c}{\tablename~\thetable{} (continued)}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endhead
+\hline
+\multicolumn{5}{r}{\emph{Continued on next page}}\\
+\endfoot
+\hline
+\endlastfoot
+TC24 & Submission of a document-specific question through Ask LexiClear & A response grounded in the uploaded document is generated & Document-specific question answering was demonstrated through the frontend (Section~4.2) & \textbf{PASS}\\
+\hline
+TC25 & Submission of a follow-up question after an initial answer & The follow-up question is answered in the context of the same document & Draft entry: the follow-up question was answered for the same document. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC26 & Retrieval of relevant document chunks for 80 document-specific questions & Relevant chunks are retrieved for each question & Context Precision of 0.986 was recorded (Section~4.3.3) & \textbf{PASS}\\
+\hline
+TC27 & Comparison of generated answers with expected answers for 80 questions & Generated answers correspond semantically to the expected answers & QA Accuracy of 0.7625 was recorded, i.e., 61 of 80 questions met the similarity threshold (Section~4.3.4, Table~4.1) & \textbf{PASS}\\
+\hline
+TC28 & Grounding of generated statements in the retrieved context & Every statement in a response is supported by the retrieved context & Faithfulness of 0.500 was recorded, indicating that grounding was not uniform (Section~4.3.3) & \textbf{FAIL}\\
+\hline
+TC29 & Retrieval of all context needed to answer a question & The retrieved context covers all information needed for the expected answer & Context Recall of 0.500 was recorded, indicating that retrieval was not uniformly complete (Section~4.3.3) & \textbf{FAIL}\\
+\end{longtable}
+}
+
+Test cases TC24 to TC29 combine functional and measured checks. TC24 and TC25 cover document-specific questions and follow-up questions. TC26 to TC29 use the values reported in Section~4.3 for 80 questions: Context Precision, QA Accuracy, Faithfulness, and Context Recall. The two failed cases correspond to the Faithfulness and Context Recall values of 0.500, which show that grounding and retrieval completeness were not uniform.
+\needspace{18\baselineskip}
+\subsection{Multilingual Support Module}
+Table~\ref{tab:multi} lists the 4 test cases for this module (TC30 to TC33). Provisionally, 3 passed and 1 failed.
+{\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.085\linewidth}
+                     >{\raggedright\arraybackslash}p{0.225\linewidth}
+                     >{\raggedright\arraybackslash}p{0.25\linewidth}
+                     >{\raggedright\arraybackslash}p{0.265\linewidth}
+                     >{\raggedright\arraybackslash}p{0.09\linewidth}@{}}
+\caption{Test Cases for Multilingual Support Module (Provisional Results)}\label{tab:multi}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endfirsthead
+\multicolumn{5}{c}{\tablename~\thetable{} (continued)}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endhead
+\hline
+\multicolumn{5}{r}{\emph{Continued on next page}}\\
+\endfoot
+\hline
+\endlastfoot
+TC30 & Selection of English as the output language & The response is presented in English & Draft entry: the response was presented in English. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC31 & Selection of Hindi as the output language for an analysis or answer & A Hindi response conveying the same document-grounded information is shown & Draft entry: a Hindi response was shown. No Hindi-specific observation is recorded in the report. To be validated & \textbf{PASS}\\
+\hline
+TC32 & Selection of Kannada as the output language for an analysis or answer & A Kannada response conveying the same document-grounded information is shown & Draft entry: a Kannada response was shown. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC33 & Translation of legal terminology into Hindi and Kannada & Legal terms are translated accurately and consistently & Draft entry: terminology accuracy was not established. No expert linguistic assessment or translation-quality scores were obtained (Sections~4.3.6 and~5.1) & \textbf{FAIL}\\
+\end{longtable}
+}
+
+Test cases TC30 to TC33 examine the language selection feature. TC30 to TC32 check that the response can be presented in English, Hindi, and Kannada while conveying the same document-grounded information. TC33 checks the translation of legal terminology. It is provisionally marked as failed because no expert linguistic assessment or standardized translation metric was used, so the results establish functional multilingual support rather than a measurement of translation quality (Section~5.1). Because the same document-grounded information is expected in every language, a change of language should change only the wording of the response and not the facts that it reports. TC30 to TC32 verify that the output language can be selected, and TC33 identifies terminology quality as the part still to be validated.
+
+The Multilingual Support Module aims to make legal information more accessible to users who prefer different languages. By supporting English, Hindi, and Kannada, LexiClear allows users to interact with the system in a language they are comfortable with while retaining the document-grounded information. An important aspect of this functionality is maintaining consistency in the meaning of legal terms during language selection and translation. The testing results demonstrate the language selection functionality, while TC33 highlights the need for further validation of legal terminology and translation accuracy. Future improvements should focus on preserving the original legal meaning, using appropriate terminology, and evaluating translations through standardized linguistic assessments. This will help make the multilingual feature more reliable and understandable for users.
+
+
+\needspace{18\baselineskip}
+\subsection{Text-to-Speech Module}
+Table~\ref{tab:tts} lists the 5 test cases for this module (TC34 to TC38). Provisionally, 4 passed and 1 failed.
+{\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.085\linewidth}
+                     >{\raggedright\arraybackslash}p{0.225\linewidth}
+                     >{\raggedright\arraybackslash}p{0.25\linewidth}
+                     >{\raggedright\arraybackslash}p{0.265\linewidth}
+                     >{\raggedright\arraybackslash}p{0.09\linewidth}@{}}
+\caption{Test Cases for Text-to-Speech Module (Provisional Results)}\label{tab:tts}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endfirsthead
+\multicolumn{5}{c}{\tablename~\thetable{} (continued)}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endhead
+\hline
+\multicolumn{5}{r}{\emph{Continued on next page}}\\
+\endfoot
+\hline
+\endlastfoot
+TC34 & Passing a generated Kannada legal statement to the text-to-speech component & A WAV audio file is generated & A WAV file was generated successfully using the available Apple MPS device configuration (Sections~4.2 and~4.3.7) & \textbf{PASS}\\
+\hline
+TC35 & Selecting the Listen control on a displayed response & Speech playback of the response begins & Draft entry: playback began. The frontend provides the control (Section~4.3.7). To be validated & \textbf{PASS}\\
+\hline
+TC36 & Selecting the Stop control while audio is playing & Playback ends & Draft entry: playback ended. The frontend provides the control (Section~4.3.7). To be validated & \textbf{PASS}\\
+\hline
+TC37 & Speech output for an English or Hindi response & Audio corresponding to the displayed response is produced & Draft entry: audio was produced for the response. To be validated against an execution record & \textbf{PASS}\\
+\hline
+TC38 & Pronunciation and intelligibility of legal terminology in the generated speech & Legal terms are pronounced clearly and consistently across the supported languages & Draft entry: speech quality was not established. Speech quality was not systematically measured (Sections~4.3.7 and~5.1) & \textbf{FAIL}\\
+\end{longtable}
+}
+
+Test cases TC34 to TC38 examine speech output. TC34 checks that a Kannada legal statement produces a WAV file, which was observed during development testing (Section~4.3.7). TC35 and TC36 check the Listen and Stop controls, and TC37 checks speech for an English or Hindi response. TC38 checks the pronunciation and intelligibility of legal terminology. It is provisionally marked as failed because speech quality was evaluated functionally and not through a formal benchmark (Section~5.1). The Listen and Stop controls belong to the frontend accessibility workflow, whereas WAV generation belongs to the text-to-speech component, so the five cases cover both the generation of audio and the way the user controls it.
+\needspace{18\baselineskip}
+\subsection{System Performance and Error Handling Module}
+Table~\ref{tab:perf} lists the 4 test cases for this module (TC39 to TC42). Provisionally, 2 passed and 2 failed.
+{\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.085\linewidth}
+                     >{\raggedright\arraybackslash}p{0.225\linewidth}
+                     >{\raggedright\arraybackslash}p{0.25\linewidth}
+                     >{\raggedright\arraybackslash}p{0.265\linewidth}
+                     >{\raggedright\arraybackslash}p{0.09\linewidth}@{}}
+\caption{Test Cases for System Performance and Error Handling Module (Provisional Results)}\label{tab:perf}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endfirsthead
+\multicolumn{5}{c}{\tablename~\thetable{} (continued)}\\
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status}\\
+\hline
+\endhead
+\hline
+\multicolumn{5}{r}{\emph{Continued on next page}}\\
+\endfoot
+\hline
+\endlastfoot
+TC39 & End-to-end workflow of upload, analysis, and question answering through the frontend and the FastAPI backend & Each frontend operation is handled by the corresponding backend functionality & The frontend was connected to the upload, analysis, Ask LexiClear, and speech-related interactions in the macOS development environment (Section~4.2) & \textbf{PASS}\\
+\hline
+TC40 & Submission of an invalid request, such as a question without a processed document & The system does not crash and the interface indicates that the request cannot be completed & Draft entry: the system remained operational and a message was shown. To be validated; the exact message is to be recorded & \textbf{PASS}\\
+\hline
+TC41 & Processing of a lengthy document within an acceptable time & Processing completes within a time that is acceptable to the user & Draft entry: the target was not demonstrated. Performance and load testing are not documented in the current evaluation (Section~4.2) & \textbf{FAIL}\\
+\hline
+TC42 & Handling of several simultaneous requests & Concurrent requests are handled without failure or loss of responses & Draft entry: the target was not demonstrated. Concurrency and load testing are not documented in the current evaluation (Section~4.2) & \textbf{FAIL}\\
+\end{longtable}
+}
+
+Test cases TC39 to TC42 examine the system as a whole. TC39 checks that the upload, analysis, and question-answering operations work together through the frontend and the backend, as described for the integration testing in Section~4.2. TC40 checks that an invalid request does not stop the system and that the interface indicates the problem. TC41 and TC42 check the processing time for a lengthy document and the handling of simultaneous requests. They are provisionally marked as failed because the report does not establish system performance (Section~4.2) and documents no load testing.
+
+\needspace{14\baselineskip}
+\section{Overall Test Summary}
+Table~\ref{tab:test-summary} summarises the provisional distribution of the 42 test cases across the ten modules. The totals are draft values retained for review.
+
+{\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.46\linewidth}>{\centering\arraybackslash}p{0.13\linewidth}>{\centering\arraybackslash}p{0.13\linewidth}>{\centering\arraybackslash}p{0.13\linewidth}@{}}
+\caption{Provisional Test Summary by Module}\label{tab:test-summary}\\
+\hline
+\textbf{Module} & \textbf{Total} & \textbf{Passed} & \textbf{Failed}\\
+\hline
+\endfirsthead
+\multicolumn{4}{c}{\tablename~\thetable{} (continued)}\\
+\hline
+\textbf{Module} & \textbf{Total} & \textbf{Passed} & \textbf{Failed}\\
+\hline
+\endhead
+\hline
+\multicolumn{4}{r}{\emph{Continued on next page}}\\
+\endfoot
+\hline
+\endlastfoot
+Document Upload & 4 & 3 & 1\\
+\hline
+Document Analysis & 4 & 3 & 1\\
+\hline
+Key Clause Extraction & 3 & 2 & 1\\
+\hline
+Rights and Obligations Extraction & 4 & 3 & 1\\
+\hline
+Risk Analysis & 4 & 3 & 1\\
+\hline
+Jurisdictional Context & 4 & 3 & 1\\
+\hline
+Ask LexiClear -- RAG & 6 & 4 & 2\\
+\hline
+Multilingual Support & 4 & 3 & 1\\
+\hline
+Text-to-Speech & 5 & 4 & 1\\
+\hline
+System Performance and Error Handling & 4 & 2 & 2\\
+\hline
+\textbf{TOTAL} & \textbf{42} & \textbf{30} & \textbf{12}\\
+\end{longtable}
+}
+
+The provisional percentages are calculated from the totals in Table~\ref{tab:test-summary}.
+\begin{align*}
+\text{Pass Percentage} &= \frac{30}{42}\times 100 = 71.43\%\\
+\text{Fail Percentage} &= \frac{12}{42}\times 100 = 28.57\%
+\end{align*}
+These percentages describe the draft test results only. They are not verified execution measurements and are to be recomputed after the entries are validated.
+
+\section{Test Result Analysis}
+Of the 42 test cases, 30 are provisionally marked as passed and 12 as failed. At module level, the provisional pass rates are 75.00\% for Document Upload, Document Analysis, Rights and Obligations Extraction, Risk Analysis, Jurisdictional Context, and Multilingual Support; 66.67\% for Key Clause Extraction and Ask LexiClear (RAG); 80.00\% for Text-to-Speech; and 50.00\% for System Performance and Error Handling.
+
+The provisional failures are concentrated in areas that the report already identifies as limitations or future work. These areas are the accuracy of OCR on low-quality scans (TC04), completeness and expert verification of generated analysis (TC08, TC15, and TC19), clause-level source traceability (TC11), jurisdiction-specific legal accuracy (TC23), translation quality for legal terminology (TC33), and speech quality (TC38). Two provisional failures in the Ask LexiClear module (TC28 and TC29) correspond to the Faithfulness and Context Recall values of 0.500 reported in Section~4.3.3. The two failures in System Performance and Error Handling (TC41 and TC42) reflect that performance and load behaviour was not demonstrated in the current evaluation (Section~4.2).
+
+These observations are consistent with Sections~5.1 and~5.2. The core workflow of upload, analysis, question answering, multilingual output, and speech generation is provisionally marked as functioning, while the failed cases indicate where further validation and improvement are required. Because the results are provisional, the analysis in this section should be revised once each test case has been executed and its observed outcome recorded.
+
+\section{Conclusion}
+This chapter presented a module-wise functional test suite of 42 test cases for LexiClear, covering ten modules from document upload to system performance and error handling. The provisional results show 30 passed and 12 failed cases, corresponding to a pass percentage of 71.43\% and a fail percentage of 28.57\%. These values are draft results retained for review and are not verified execution measurements.
+
+The provisional failures point to the areas that require further work: OCR on low-quality scans, completeness and expert verification of generated analysis, source traceability, jurisdiction-specific accuracy, translation and speech quality, retrieval grounding, and performance under load. Each draft entry should be confirmed by executing the corresponding test and recording the observed outcome before the results are presented as verified. LexiClear remains an information-access and comprehension aid and not a substitute for qualified legal advice.
+
+
+
 \chapter{Limitations and Future Scope}
 
 \section{Limitations}
@@ -2874,7 +3373,62 @@ The project also has limitations that should be considered when interpreting the
 Overall, LexiClear demonstrates the feasibility of combining document processing, semantic retrieval, RAG, contextual grounding, multilingual processing, and speech-based interaction to improve access to complex legal and administrative information. The system is intended as a document comprehension and information-access aid, rather than a replacement for qualified legal advice or authoritative legal interpretation. Future development can focus on stronger source and clause-level traceability, broader jurisdiction-specific resources, additional Indian languages, voice-based input, document comparison, expert-annotated evaluation datasets, and more comprehensive usability and performance testing.
 
 \newpage
-\addcontentsline{toc}{chapter}{\protect\numberline{}{\bfseries REFERENCES}}
+\addcontentsline{toc}{chapter}{\protect\numberline{}{\bfseries Bibliography}}
 \bibliographystyle{unsrt} 
 \bibliography{ref}  
+
+% -------- Profile of Team Members and Guide --------
+\clearpage
+\chapter*{\centering\Large\bfseries PROFILE OF TEAM MEMBERS AND GUIDE}
+
+% Photos: upload the image files to the Overleaf project root with these
+% names (.jpg / .jpeg / .png all work, so no extension is written below):
+%   adithya, adithyan, mazin, shaaz, guide
+
+% One team-member entry: {photo file}{name}{USN}{e-mail}{WhatsApp number}
+\newlength{\gapA}\setlength{\gapA}{19.2pt}
+\newlength{\gapC}\setlength{\gapC}{16pt}
+\newlength{\gapB}\setlength{\gapB}{0pt}
+\newcommand{\profilemember}[5]{%
+  \noindent
+  \begin{minipage}[t]{4.0cm}\centering
+    \raisebox{\dimexpr 14.7pt-\height\relax}{\includegraphics[width=2.8cm,height=2.8cm]{#1}}%
+  \end{minipage}\hspace{0.56cm}%
+  \begin{minipage}[t]{10.7cm}
+    {\large\bfseries #2}\par
+    \textbf{USN:} #3\par
+    \textbf{Email:} #4\par
+    \textbf{WhatsApp:} #5\par
+  \end{minipage}\par\vspace{10pt}}
+
+\vspace{-2.7pt}
+{\centering\large\bfseries Profile of Team Members\par}
+\vspace{\gapA}
+
+\profilemember{adithya}{ADITHYA JAYAN}{4JK23CI005}{adi04jayan\at gmail.com}{79750 32121}
+\profilemember{adithyan}{ADITHYAN M}{4JK23CI006}{adithyan.m.r.no12\at gmail.com}{8147239762}
+\profilemember{mazin}{MAZIN HAMEED}{4JK23CI029}{mazin.hameed456\at gmail.com}{81388 92584}
+\profilemember{shaaz}{SHAAZ OMAR}{4JK23CI049}{shazomar041\at gmail.com}{90355 44406}
+
+\vspace{-4pt}
+\noindent\rule{\linewidth}{1pt}\par
+\vspace{6pt}
+
+\vspace{\gapB}
+{\centering\large\bfseries Profile of Project Guide\par}
+\vspace{\gapC}
+
+\noindent
+\begin{minipage}[t]{4.0cm}\centering
+  \mbox{}\par\mbox{}\par\vspace{14.5pt}
+  \raisebox{-\height}{\includegraphics[width=2.8cm,height=2.8cm]{guide}}%
+\end{minipage}\hspace{0.56cm}%
+\begin{minipage}[t]{10.7cm}
+  \begin{spacing}{1.12}
+  \noindent{\large\bfseries Dr. Pradeep Udupa} Dr. Pradeep Udupa is an Associate Professor in the Department of Computer Science and Engineering (Artificial Intelligence and Machine Learning) at A.J. Institute of Engineering and Technology (AJIET), Mangaluru, Karnataka. He holds a Ph.D. and an M.Tech in Computer Science and Engineering and has over 18 years of teaching experience. His research area is Software Engineering and Testing, and he is also interested in Operating Systems, Artificial Intelligence, and Machine Learning. He has published around 7 papers in Scopus-indexed journals, including one in a Q1 journal (Engineering Applications of Artificial Intelligence, Elsevier), along with a Springer book chapter and 3 published patents.\par
+  \end{spacing}
+  \textbf{Email:} pradeepumlr@gmail.com\par
+  \textbf{WhatsApp:} 86181 09452\par
+\end{minipage}
+
 \end{document}
