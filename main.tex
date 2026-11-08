@@ -21,6 +21,19 @@
             justification=centering, singlelinecheck=true]{caption}
 \captionsetup[table]{position=above, skip=6pt}
 \captionsetup[figure]{position=below, skip=6pt}
+\renewcommand{\contentsname}{CONTENTS}
+\renewcommand{\cfttoctitlefont}{\hfill\bfseries\fontsize{17.28}{21}\selectfont}
+\renewcommand{\cftaftertoctitle}{\hfill}
+\renewcommand{\cftloftitlefont}{\hfill\bfseries\fontsize{17.28}{21}\selectfont}
+\renewcommand{\cftafterloftitle}{\hfill}
+\renewcommand{\cftlottitlefont}{\hfill\bfseries\fontsize{17.28}{21}\selectfont}
+\renewcommand{\cftafterlottitle}{\hfill}
+\setlength{\cftbeforetoctitleskip}{1.3pt}
+\setlength{\cftaftertoctitleskip}{10pt}
+\setlength{\cftbeforeloftitleskip}{1.3pt}
+\setlength{\cftafterloftitleskip}{20pt}
+\setlength{\cftbeforelottitleskip}{1.3pt}
+\setlength{\cftafterlottitleskip}{20pt}
 
 \setlength{\cfttabnumwidth}{3em}
 \setlength{\cftfignumwidth}{3em}
@@ -39,13 +52,14 @@
 \titleformat{\chapter}[display]
   {\centering\bfseries}
   {\fontsize{16}{19}\selectfont\MakeUppercase{\chaptertitlename}\ \thechapter}
-  {14pt}
+  {10pt}
   {\fontsize{18}{22}\selectfont}
 % Unnumbered chapters (Abstract, Contents, lists, Bibliography)
 \titleformat{name=\chapter,numberless}[block]
   {\centering\bfseries\fontsize{17.28}{21}\selectfont}{}{0pt}{}
 % Old value was -30pt (heading about 19pt too high); -11pt moves it down
-\titlespacing{\chapter}{0pt}{-11pt}{18pt}
+\titlespacing*{\chapter}{0pt}{-8pt}{10pt}
+\titlespacing*{name=\chapter,numberless}{0pt}{-6.7pt}{10pt}
 
 % hyphenpenalty=10000 stops headings breaking mid-word
 \titleformat{\section}
