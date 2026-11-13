@@ -393,7 +393,7 @@ images, Optical Character Recognition (OCR) is required to recognize the
 textual content. The extracted content forms the basis for subsequent preprocessing,
 semantic representation, retrieval, and response generation. Therefore,
 document processing is closely connected to the overall quality of the
-document-understanding workflow. \cite{pramanik2025}
+document-understanding workflow \cite{pramanik2025}.
 
 \subsection{PDF Document Processing}
 
@@ -418,7 +418,7 @@ scanned pages would not be readily available to the semantic retrieval and
 question-answering components. However, OCR output may contain recognition errors depending on the quality
 of the scanned document, page layout, text clarity, and other document
 characteristics. Such errors can affect the quality of the extracted text
-and may consequently influence later retrieval and analysis. \cite{pramanik2025}
+and may consequently influence later retrieval and analysis \cite{pramanik2025}.
 
 \subsection{Text Preprocessing and Chunking}
 
@@ -1050,8 +1050,7 @@ different parts of the document-understanding problem. OCR helps process
 scanned documents, semantic retrieval improves contextual search, RAG connects
 retrieved information with language generation, and multilingual and speech
 technologies improve accessibility. LexiClear combines these capabilities into a single
-document-oriented workflow. \cite{mahoney2019,kandula2023,nethriya2024,
-jurisai2025}.
+document-oriented workflow \cite{mahoney2019,kandula2023,jurisai2025}.
 
 \section{Existing System}
 
@@ -1069,8 +1068,8 @@ obligations and rights, retrieval of relevant conditions, or answers to
 questions expressed in ordinary language. Existing research therefore provides
 useful foundations for automated legal document analysis, but it also reveals
 the need for systems that connect document processing, semantic retrieval,
-generation, and user-oriented interaction within a common workflow.
-\cite{mahoney2019,kandula2023,pramanik2025}
+generation, and user-oriented interaction within a common workflow
+\cite{mahoney2019,kandula2023,pramanik2025}.
 
 \subsection{AI-Based Legal Document Review}
 
@@ -1087,8 +1086,8 @@ work establishes that automated processing can support legal professionals and
 users in handling large quantities of textual information. However, document
 classification primarily addresses the organization or categorization of text
 and does not necessarily provide a direct mechanism for users to understand
-the meaning of individual clauses within a specific uploaded document.
-\cite{mahoney2019}
+the meaning of individual clauses within a specific uploaded document
+\cite{mahoney2019}.
 
 AI-based document review can therefore be viewed as an important foundation
 rather than a complete solution for document understanding. A practical system
@@ -1101,8 +1100,8 @@ category. The distinction is important because users interacting with legal
 and administrative documents may not know the terminology or structure used
 by the document in advance. Consequently, systems intended for broader
 document understanding need to provide mechanisms for retrieving relevant
-content and presenting it in a form that supports comprehension.
-\cite{mahoney2019,nethriya2024}
+content and presenting it in a form that supports comprehension
+\cite{mahoney2019,nethriya2024}.
 
 \subsection{Legal Language Comprehension}
 
@@ -1118,8 +1117,8 @@ information is understood by non-specialist readers. Their work provides an
 important foundation for considering accessibility and comprehension as part
 of legal information systems rather than treating textual correctness as the
 only objective. This perspective is directly relevant to systems intended to
-make complex legal information easier for ordinary users to understand.
-\cite{charrow1979}
+make complex legal information easier for ordinary users to understand
+\cite{charrow1979}.
 
 The comprehension problem also affects how users interact with automated
 legal-information systems. A system may correctly retrieve a clause from a
@@ -1132,8 +1131,8 @@ contained in the original source. This creates a distinction between systems
 that merely locate legal text and systems that attempt to support users in
 understanding that text. The latter approach is particularly relevant to
 LexiClear because the system is designed around document comprehension and
-information accessibility rather than document retrieval alone.
-\cite{charrow1979,basha2024}
+information accessibility rather than document retrieval alone
+\cite{charrow1979,basha2024}.
 
 \subsection{Conversational Legal Assistance}
 
@@ -1148,8 +1147,8 @@ that conversational interaction can provide an alternative to traditional
 interfaces in which users must manually navigate legal information. Natural
 language interaction allows users to express questions in a form that is more
 similar to ordinary communication, reducing the need to understand the
-underlying structure of an information system.
-\cite{kandula2023,kurniawan2024,trivedi2024}
+underlying structure of an information system
+\cite{kandula2023,kurniawan2024,trivedi2024}.
 
 However, a general conversational legal assistant and a document-specific
 question-answering system address different requirements. A general assistant
@@ -1162,8 +1161,8 @@ records. The response should be based on the relevant portions of the source
 document rather than only on general legal knowledge. Consequently, existing
 conversational approaches provide an important interaction model for
 LexiClear, while document-grounded retrieval provides the additional
-connection between the user's question and the uploaded document.
-\cite{kandula2023,dutta2024,muthuraju2025}
+connection between the user's question and the uploaded document
+\cite{kandula2023,dutta2024,muthuraju2025}.
 
 \subsection{Legal Natural Language Processing}
 
@@ -1180,8 +1179,8 @@ language.
 For document-understanding systems, such processing provides an important
 foundation because raw legal text must first be transformed into useful
 representations before retrieval, analysis, or question answering can be
-performed.
-\cite{bommarito2018lexnlp}
+performed
+\cite{bommarito2018lexnlp}.
 
 The development of legal NLP also demonstrates that legal documents contain
 information that cannot always be handled effectively using only general
@@ -1194,8 +1193,8 @@ the use of document preprocessing, semantic representations, and retrieval
 methods that are intended to work with formal legal and administrative text.
 The objective is not to replace legal reasoning with automated processing, but
 to create a computational representation that makes relevant document
-information more accessible to subsequent analysis and user interaction.
-\cite{bommarito2018lexnlp}
+information more accessible to subsequent analysis and user interaction
+\cite{bommarito2018lexnlp}.
 
 \subsection{Domain-Specific Legal Language Models}
 
@@ -1209,8 +1208,8 @@ from those found in general-purpose datasets, making domain-specific
 representations useful for a range of legal NLP tasks. The development of
 LEGAL-BERT therefore demonstrates the broader importance of considering the
 characteristics of legal language when designing automated systems for legal
-text understanding.
-\cite{chalkidis2020legalbert}
+text understanding
+\cite{chalkidis2020legalbert}.
 
 The relevance of domain-specific models extends beyond the selection of a
 particular language model. It also suggests that the representation of legal
@@ -1222,8 +1221,8 @@ research on LEGAL-BERT nevertheless provides useful evidence that legal text
 benefits from approaches that recognize its domain-specific characteristics.
 This supports the broader design principle of treating legal and
 administrative documents differently from unrestricted general-domain text
-when developing systems intended to assist users with their interpretation.
-\cite{chalkidis2020legalbert}
+when developing systems intended to assist users with their interpretation
+\cite{chalkidis2020legalbert}.
 
 \subsection{Evaluation of Legal Language Understanding}
 
@@ -1237,8 +1236,8 @@ different applications may involve classification, entailment, information
 extraction, or other forms of language understanding. This observation is
 relevant to document-oriented AI systems because successful document
 interaction may also require several complementary capabilities rather than
-one isolated measure of performance.
-\cite{chalkidis2022lexglue}
+one isolated measure of performance
+\cite{chalkidis2022lexglue}.
 
 Evaluation is particularly important when an AI system generates explanations
 or answers based on retrieved document information. A response may appear
@@ -1251,8 +1250,7 @@ RAG evaluation provides a basis for considering these dimensions separately.
 For LexiClear, this perspective supports evaluating the system as a
 combination of document processing, retrieval, and generation rather than
 treating the final generated response as the only indicator of system
-performance.
-\cite{chalkidis2022lexglue,es2024ragas,zhang2020bertscore}
+performance\cite{es2024ragas,zhang2020bertscore}.
 
 \subsection{AI-Based Legal Documentation and Drafting}
 
@@ -1266,8 +1264,8 @@ show that language technologies can assist with document-related tasks that
 would otherwise require substantial manual effort. At the same time, the use
 of generative models introduces the requirement for appropriate contextual
 information when the generated output is expected to correspond to a
-particular source document.
-\cite{pramanik2025,basha2024}
+particular source document
+\cite{pramanik2025,basha2024}.
 
 The distinction between document generation and document understanding is
 important when considering the requirements of LexiClear. A drafting system
@@ -1278,8 +1276,8 @@ language-processing capabilities are related. Both applications require
 methods for processing complex language and producing useful textual output.
 For LexiClear, these capabilities are directed toward explanation,
 question-answering, and accessibility, with the uploaded document remaining
-the primary source for the information presented to the user.
-\cite{pramanik2025,basha2024}
+the primary source for the information presented to the user
+\cite{pramanik2025,basha2024}.
 
 \subsection{AI-Based Legal Information Systems}
 
@@ -1292,8 +1290,8 @@ and can reduce the need to manually navigate large collections of legal
 material. Such approaches are relevant to the development of accessible
 legal-information tools because users can interact with the system through
 questions rather than having to identify and interpret every relevant source
-independently.
-\cite{dutta2024,muthuraju2025}
+independently
+\cite{dutta2024,muthuraju2025}.
 
 Although these systems demonstrate the value of AI-assisted legal information
 access, document-specific assistance introduces an additional requirement.
@@ -1304,8 +1302,8 @@ may contain provisions that are specific to the individual document and may
 not be represented by general legal knowledge. LexiClear addresses this
 requirement by combining document processing with semantic retrieval and
 document-grounded generation, allowing the user's question to be connected
-to relevant portions of the uploaded source.
-\cite{dutta2024,muthuraju2025,jurisai2025}
+to relevant portions of the uploaded source
+\cite{dutta2024,muthuraju2025,jurisai2025}.
 
 \subsection{AI-Based Legal Document Analysis}
 
@@ -1319,8 +1317,8 @@ help users obtain a more organized view of lengthy documents and can provide
 a basis for subsequent interaction with the source material. This direction
 is particularly relevant to LexiClear because the system similarly seeks to
 move beyond simple document storage or search toward structured
-understanding of document content.
-\cite{nethriya2024}
+understanding of document content
+\cite{nethriya2024}.
 
 A document-analysis system can provide greater value when its extracted
 information is combined with interactive retrieval. A static analysis may
@@ -1331,8 +1329,8 @@ know about termination conditions or required actions. Combining structured
 analysis with question answering therefore provides a more flexible approach
 to document interaction. The existing literature on legal document analysis,
 conversational assistance, and semantic retrieval provides complementary
-foundations for this type of system.
-\cite{nethriya2024,kandula2023,reimers2019sbert}
+foundations for this type of system
+\cite{nethriya2024,kandula2023,reimers2019sbert}.
 
 \subsection{Retrieval-Augmented Legal Information Systems}
 
@@ -1345,8 +1343,8 @@ retrieves relevant information and then provides that information as context
 for generation. This is particularly relevant to legal applications because
 answers may need to remain connected to specific legal sources or documents.
 The approach therefore provides an important foundation for document-grounded
-question answering systems such as LexiClear.
-\cite{jurisai2025}
+question answering systems such as LexiClear
+\cite{jurisai2025}.
 
 The RAG approach also addresses an important limitation of standalone
 generative language models in document-specific applications. A language
@@ -1357,8 +1355,8 @@ the response is generated. Lewis et al. established the general RAG approach
 by combining neural language generation with external information retrieval.
 For LexiClear, this principle is adapted to the uploaded-document setting,
 where retrieved document segments provide the contextual basis for generating
-answers and explanations.
-\cite{lewis2020rag,jurisai2025}
+answers and explanations
+\cite{lewis2020rag,jurisai2025}.
 
 \subsection{Limitations of Existing Systems}
 
@@ -1372,8 +1370,8 @@ retrieval-augmented generation. This separation creates an opportunity for
 systems that combine complementary capabilities while maintaining a clear
 connection to the original document. The literature therefore provides
 individual technical foundations that can be integrated into a broader
-document-oriented architecture.
-\cite{mahoney2019,kandula2023,nethriya2024,jurisai2025}
+document-oriented architecture
+\cite{mahoney2019,kandula2023,jurisai2025}.
 
 Another limitation concerns accessibility. A system may successfully retrieve
 and generate information but still remain difficult to use for individuals
@@ -1385,8 +1383,8 @@ document-grounded question answering, structured analysis, and speech-based
 interaction are not always provided together within a single workflow. This
 creates a broader design requirement for systems that consider accessibility
 as part of document understanding rather than treating it only as a final
-presentation feature.
-\cite{ash2024translating}
+presentation feature
+\cite{ash2024translating}.
 
 The literature also indicates that automated legal-information systems should
 be treated as assistance mechanisms rather than authoritative replacements
@@ -1398,8 +1396,8 @@ especially important when the system processes legal or administrative
 documents because an incorrect extraction or unsupported generated statement
 can affect the usefulness of the resulting explanation. Accordingly, a
 document-understanding system should make its scope and limitations clear
-while keeping the source document central to the interaction.
-\cite{lewis2020rag,es2024ragas}
+while keeping the source document central to the interaction
+\cite{lewis2020rag,es2024ragas}.
 
 \section{Review Summary}
 
@@ -1415,8 +1413,8 @@ foundations rather than a single solution that addresses document ingestion,
 retrieval, explanation, interaction, and accessibility together. This
 observation provides the basis for considering an integrated architecture
 such as LexiClear, where multiple AI-based components operate as connected
-stages of a document-oriented workflow.
-\cite{mahoney2019,kandula2023,nethriya2024,jurisai2025}
+stages of a document-oriented workflow
+\cite{mahoney2019,kandula2023,jurisai2025}.
 
 \subsection{Technical Findings from the Literature}
 
@@ -1431,8 +1429,8 @@ information from such documents. OCR further extends this capability to
 scanned or image-based documents, while preprocessing and segmentation make
 the extracted information more suitable for subsequent retrieval. These
 findings support the use of document processing as the initial stage of a
-larger document-understanding pipeline.
-\cite{bommarito2018lexnlp,pramanik2025}
+larger document-understanding pipeline
+\cite{bommarito2018lexnlp,pramanik2025}.
 
 Semantic representation is another important finding from the literature.
 Traditional keyword-based retrieval depends heavily on the presence of
@@ -1444,8 +1442,8 @@ their contextual similarity. The literature on Sentence-BERT demonstrates
 the usefulness of semantic embeddings for representing text in a form that
 supports similarity-based retrieval. This principle is relevant to LexiClear
 because users may express questions using ordinary language while the
-corresponding document content may use formal or domain-specific terminology.
-\cite{reimers2019sbert}
+corresponding document content may use formal or domain-specific terminology
+\cite{reimers2019sbert}.
 
 \subsection{Role of Retrieval-Augmented Generation}
 
@@ -1459,8 +1457,8 @@ context to the language model, allowing the generated response to be
 conditioned on information obtained from the relevant source. This provides
 an important foundation for document-specific question answering because the
 generation process can be connected to the information retrieved from the
-document rather than relying exclusively on general model knowledge.
-\cite{lewis2020rag,jurisai2025}
+document rather than relying exclusively on general model knowledge
+\cite{lewis2020rag,jurisai2025}.
 
 The reviewed literature also highlights the limitations that can arise when
 generative language models are used without sufficient contextual grounding.
@@ -1472,8 +1470,8 @@ specific document content. Retrieval therefore acts as an important
 intermediate stage between the document and the generated response. The RAG
 literature supports this architecture, while the legal-domain studies
 demonstrate its relevance to systems intended to answer questions using
-specific legal information.
-\cite{basha2024,lewis2020rag,jurisai2025}
+specific legal information
+\cite{basha2024,lewis2020rag,jurisai2025}.
 
 \subsection{Importance of Structured Document Analysis}
 
@@ -1486,8 +1484,8 @@ legal systems demonstrates the value of providing users with different forms
 of access to legal information. A structured analysis component can therefore
 complement retrieval and question answering by organizing important aspects of
 the document into a form that can be accessed more directly. This provides a
-basis for extending a document-analysis system beyond a static summary.
-\cite{nethriya2024,kandula2023,trivedi2024}
+basis for extending a document-analysis system beyond a static summary
+\cite{nethriya2024,kandula2023,trivedi2024}.
 
 The combination of structured analysis and interactive questioning is
 particularly relevant because document information requirements can vary
@@ -1498,8 +1496,8 @@ information, while structured analysis provides predefined categories of
 information that may be useful without requiring a question to be formulated.
 The reviewed approaches therefore suggest that a comprehensive document
 assistant can benefit from supporting both structured and interactive forms of
-information access.
-\cite{kandula2023,nethriya2024}
+information access
+\cite{kandula2023,nethriya2024}.
 
 \subsection{Evaluation Considerations}
 
@@ -1513,8 +1511,8 @@ of system behaviour. BERTScore provides a semantic comparison between
 generated and reference responses, while RAGAS considers dimensions such as
 context relevance, faithfulness, and answer relevance. These approaches
 provide useful perspectives for evaluating different stages of a
-document-question-answering pipeline.
-\cite{chalkidis2022lexglue,zhang2020bertscore,es2024ragas}
+document-question-answering pipeline
+\cite{chalkidis2022lexglue,es2024ragas}.
 
 For a system such as LexiClear, these evaluation principles suggest that
 retrieval quality and response quality should be considered separately.
@@ -1525,8 +1523,8 @@ retrieval stage identified the most relevant source information. Evaluation
 should therefore consider the relationship between the query, retrieved
 context, expected answer, and generated response. This provides a more
 complete view of system behaviour than relying on a single final-output
-measure.
-\cite{zhang2020bertscore,es2024ragas}
+measure
+\cite{zhang2020bertscore,es2024ragas}.
 
 \subsection{Accessibility and Multilingual Support}
 
@@ -1540,8 +1538,8 @@ demonstrates how language technologies can contribute to improving the
 accessibility of complex legal information. These findings support the
 inclusion of multilingual and speech-based capabilities as complementary
 components of a document-understanding system rather than treating them as
-unrelated interface features.
-\cite{ash2024translating}
+unrelated interface features
+\cite{ash2024translating}.
 
 Within the context of LexiClear, multilingual output and text-to-speech
 extend the ways in which users can access generated document explanations.
@@ -1581,8 +1579,8 @@ systems concentrate on general legal assistance, while others focus on
 document analysis or retrieval. This separation indicates a research
 opportunity for an integrated system that connects document processing,
 semantic retrieval, grounded generation, structured analysis, and
-user-oriented accessibility.
-\cite{mahoney2019,kandula2023,nethriya2024,jurisai2025}
+user-oriented accessibility
+\cite{nethriya2024,jurisai2025}.
 
 A further gap concerns the connection between the user's information need and
 the specific contents of an uploaded document. General legal assistants can
@@ -1594,8 +1592,8 @@ and the generated response is connected to that retrieved content. The
 combination of semantic retrieval and Retrieval-Augmented Generation provides
 a technical basis for this requirement, while structured analysis and
 multilingual accessibility extend the interaction beyond conventional
-document search or general-purpose legal chatbots.
-\cite{reimers2019sbert,lewis2020rag,jurisai2025}
+document search or general-purpose legal chatbots
+\cite{reimers2019sbert,lewis2020rag,jurisai2025}.
 
 \subsection{Relevance of the Literature to LexiClear}
 
@@ -1609,8 +1607,8 @@ language response generation. Structured analysis provides additional forms
 of document information, while multilingual translation and text-to-speech
 extend the accessibility of the resulting explanations. The overall design
 therefore builds upon multiple established research directions rather than
-depending on a single AI technique.
-\cite{pramanik2025,reimers2019sbert,lewis2020rag,ash2024translating}
+depending on a single AI technique
+\cite{pramanik2025,lewis2020rag,ash2024translating}.
 
 The combined workflow can be represented conceptually as document processing
 and OCR followed by preprocessing and chunking, semantic representation,
@@ -1622,8 +1620,8 @@ technologies, while their integration within LexiClear provides a unified
 workflow for interacting with complex legal and administrative documents.
 This integration is intended to improve information access and comprehension
 while retaining the uploaded document as the primary source for the
-system's analysis.
-\cite{pramanik2025,jurisai2025,lewis2020rag}
+system's analysis
+\cite{pramanik2025,jurisai2025,lewis2020rag}.
 
 \subsection{Limitations Identified from the Literature}
 
@@ -1637,8 +1635,8 @@ Similarly, multilingual processing and translation introduce additional
 dependencies that may affect the presentation of information. These
 limitations indicate that automated document-understanding systems should be
 considered assistance tools rather than replacements for authoritative
-documents, legal professionals, or official sources.
-\cite{lewis2020rag,es2024ragas}
+documents, legal professionals, or official sources
+\cite{lewis2020rag,es2024ragas}.
 
 The same limitations are relevant to the interpretation of LexiClear's
 evaluation results. Successful performance on a selected collection of
@@ -1646,7 +1644,7 @@ documents and questions does not establish that the system can correctly
 interpret every type of legal or administrative document. Document structure,
 language, OCR quality, retrieval behaviour, and contextual information can
 vary considerably between sources. Evaluation should therefore be understood
-within the scope of the documents, questions, and metrics used during testing.\cite{chalkidis2022lexglue,es2024ragas}
+within the scope of the documents, questions, and metrics used during testing \cite{chalkidis2022lexglue,es2024ragas}.
 
 \subsection{Overall Review Findings}
 
@@ -1660,8 +1658,8 @@ extend accessibility. These technologies address different stages of the
 same broader problem: enabling users to access and understand information
 contained within complex legal and administrative documents. The literature
 therefore provides a technical and conceptual foundation for the integrated
-LexiClear workflow.
-\cite{pramanik2025,reimers2019sbert,lewis2020rag,ash2024translating}
+LexiClear workflow
+\cite{pramanik2025,lewis2020rag,ash2024translating}.
 
 The review consequently supports the methodology adopted for LexiClear:
 combining document extraction, semantic retrieval, Retrieval-Augmented
@@ -2437,9 +2435,9 @@ document structure, terminology, clause organization, and information density.
 
 For evaluating the Ask LexiClear functionality, question-answer datasets were
 prepared in CSV format from the documents used during testing. Each CSV file
-contains two fields: \texttt{question} and \texttt{expected\_answer}. The
+contains two fields: question and expected\_answer. The
 question field contains a document-specific question, while the
-\texttt{expected\_answer} field contains the corresponding expected information
+expected\_answer field contains the corresponding expected information
 derived from the source document. The questions were designed to test whether LexiClear could retrieve and
 provide information corresponding to specific clauses, conditions, and
 details present in the source document. The questions therefore provide a
@@ -2447,11 +2445,11 @@ document-oriented evaluation mechanism in which the generated response can be
 compared with information expected from the corresponding source material.
 
 Three separate CSV files were prepared for the documents used during
-functional testing. The first dataset, \texttt{qa\_test.csv}, contains
+functional testing. The first dataset, qa\_test.csv, contains
 20 question-answer pairs based on the employment-related legal document.
-The second dataset, \texttt{mortgage\_deed\_qa\_test.csv}, contains 20
+The second dataset, mortgage\_deed\_qa\_test.csv, contains 20
 question-answer pairs based on the Simple Mortgage Deed. The third dataset,
-\texttt{leave\_license\_agreement\_qa\_test.csv}, contains 20 question-answer
+leave\_license\_agreement\_qa\_test.csv, contains 20 question-answer
 pairs based on the Leave and License Agreement. Together, these datasets
 provide 60 document-specific question-answer pairs for functional evaluation
 of the document-question-answering workflow. The question-answer datasets are intended to evaluate the ability of the
@@ -3340,7 +3338,7 @@ The system is intended as a document comprehension and information-access aid, r
 \clearpage
 \thispagestyle{plain}
 \vspace*{-25.8pt}
-{\centering\bfseries\fontsize{17.28}{21}\selectfont PROFILE OF TEAM MEMBERS AND GUIDE\par}
+{\centering\bfseries\fontsize{17.28}{21}\selectfont PROFILE OF TEAM MEMBERS AND THE GUIDE\par}
 \vspace{7.6pt}
 {\centering\large\bfseries Team Members\par}
 \vspace{10.3pt}
@@ -3374,8 +3372,12 @@ The system is intended as a document comprehension and information-access aid, r
   \includegraphics[width=85.3bp]{guide}%
 \end{minipage}\hspace{0.77cm}%
 \begin{minipage}[c]{\dimexpr\textwidth-3.83cm-0.77cm\relax}
-  \noindent{\large\bfseries Dr. Pradeep Udupa} Dr. Pradeep Udupa is an Associate Professor in the Department of CSE (AIML) at AJIET, Mangaluru. He holds a Ph.D. and an M.Tech in Computer Science and Engineering and has over 18 years of teaching experience. His research area is Software Engineering and Testing. He has published around 7 papers in Scopus-indexed journals, including one in a Q1 journal, along with a Springer book chapter and 3 published patents.\par
-  \textbf{Email:} pradeepumlr\at gmail.com\par
+  \noindent{\large\bfseries Dr. Pradeep Udupa}
+    Dr. Pradeep Udupa is an Associate Professor in the
+    Department of CSE (AIML) at AJIET,
+    \mbox{Mangaluru}. He completed his M.Tech in 2009
+    and Ph.D. in 2023. He holds a Ph.D. and an M.Tech in Computer Science and Engineering and has over 18 years of teaching experience. His research area is Software Engineering and Testing. He has published around 7 papers in Scopus-indexed journals, including one in a Q1 journal, along with a Springer book chapter and 3 published patents.\par
+  \textbf{Email:} pradeepudupa\at ajiet.edu.in\par
   \textbf{WhatsApp:} 86181 09452\par
 \end{minipage}
 
