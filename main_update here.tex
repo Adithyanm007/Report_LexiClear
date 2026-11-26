@@ -2159,19 +2159,24 @@ The functional testing demonstrates that the major components of LexiClear have 
 \chapter{Software Testing}
 
 \section{Introduction}
-Software testing verifies that the implemented system behaves as specified and helps to identify the areas in which its behaviour does not yet meet the expected result. This chapter presents a module-wise functional test suite for LexiClear. The suite contains 42 test cases that cover ten functional modules: document upload, document analysis, key clause extraction, rights and obligations extraction, risk analysis, jurisdictional context, Ask LexiClear (RAG), multilingual support, text-to-speech, and system performance and error handling.
+Testing is how we find out whether LexiClear actually does what we said it would, and just as usefully, where it does not yet. This chapter sets out a module-wise functional test suite of 42 test cases spread over ten modules: document upload, document analysis, key clause extraction, rights and obligations extraction, risk analysis, jurisdictional context, Ask LexiClear (RAG), multilingual support, text-to-speech, and system performance and error handling.
 
-Each test case is described by a Test Case ID, a Test Scenario, an Expected Result, an Actual Result, and a Status. The scenarios follow the functionality described in the earlier chapters of this report and introduce no additional system features. Where the earlier chapters document an observed outcome, the Actual Result column refers to the section that reports it. Where Chapter~4 reports measured retrieval and question-answering values, those values are reproduced as recorded.
+Every test case has an ID, a scenario, an expected result, an actual result and a status. The scenarios come straight from the features described in the earlier chapters, and we did not invent extra functionality just to have something to test. Where Chapter~4 already reports what we observed, the Actual Result column points to that section. Where Chapter~4 gives measured retrieval or question-answering values, we have copied them over as recorded.
 
-\textbf{Provisional status of the results.} The pass and fail entries in this chapter are draft test results. They are provisional entries retained for review and have not been verified through recorded test execution. Statuses are therefore provisional, and entries beginning with ``Draft entry'' must be confirmed against an execution record before they are reported as verified results. This chapter does not claim that these results are experimentally verified.
+\textbf{A note on the status of these results.} The Pass and Fail entries in this chapter are provisional. They were drafted for review and are not yet backed by a recorded test run. Any entry marked ``to be confirmed'' has to be checked against an actual execution before it is quoted as a verified result, and we do not claim otherwise here.
 
-\textbf{Testing in this report.} The test cases of the project are presented only in this chapter. Chapter~4 reports the experimental results and the overall discussion (Section~4.3). Where Chapter~4 records an observed outcome or a measured value, the Actual Result column refers to the section that reports it. Where a test in this chapter covers functionality for which Chapter~4 records no observed outcome, such as OCR processing, invalid-file handling, Hindi output, and the Listen and Stop controls, the entry is a provisional draft that is to be validated.
+\textbf{Where the tests are reported.} All test cases for the project appear in this chapter only. Chapter~4 covers the experimental results and the overall discussion (Section~4.3). For functionality where Chapter~4 records no observation, such as OCR processing, invalid-file handling, Hindi output and the Listen and Stop controls, the entry here is a provisional draft waiting for validation.
 
 \section{Functional Testing}
-Functional testing examines each module of LexiClear against its expected behaviour. The test cases for each module are listed in Tables~5.1 to~5.10. In every table, Pass and Fail denote provisional statuses that are pending validation.
+In functional testing we take each module in turn and compare what it does with what it should do. The test cases are listed in Tables~5.1 to~5.10. In every table, Pass and Fail are provisional statuses until they are validated.
+
+We wrote the test cases to do more than confirm that things work. Most of them are ordinary checks, such as uploading a clean PDF, asking a question about it or picking a language. We also included cases that try to break the system on purpose: a corrupted file, a question asked before any document has been processed, and a contract with no risk clauses at all. A third group probes the weak spots we already knew about, like low-quality scans, long documents and legal terminology in translation. Those cases are the most likely to fail, and they are the ones that tell us the most.
+
+The Actual Result column comes from three places. Where we saw something happen during development on a macOS machine, with the React frontend talking to the FastAPI backend, we say so and point to the section of Chapter~4 that describes it. Where Chapter~4 gives a measured number from the 80-question evaluation, we copy that number over as it was recorded. For everything else, the entry is a provisional draft marked ``to be confirmed''. Read the tables with that in mind. A Pass next to a Chapter~4 reference is on firmer ground than a Pass that still waits for someone to run the test.
+
 \needspace{18\baselineskip}
 \subsection{Document Upload Module}
-Table~\ref{tab:upload} lists the 4 test cases for this module (TC01 to TC04). Provisionally, 3 passed and 1 failed.
+Table~\ref{tab:upload} lists the four test cases for this module (TC01 to TC04). Provisionally, three passed and one failed.
 {\footnotesize
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
@@ -2191,22 +2196,21 @@ Table~\ref{tab:upload} lists the 4 test cases for this module (TC01 to TC04). Pr
 \endfoot
 \hline
 \endlastfoot
-TC01 & Upload of a valid digital legal PDF (a rental agreement) through the frontend upload interface & The document is accepted by the interface and passed to the backend for processing & The document was accepted through the upload interface and passed to the backend (Section~4.3.1) & Pass\\
+TC01 & Upload a valid digital legal PDF (a rental agreement) through the frontend & The interface accepts the document and passes it to the backend for processing & The document was accepted through the upload interface and handed to the backend (Section~4.3.1) & Pass\\
 \hline
-TC02 & Upload of a scanned or image-based PDF that requires OCR & Text is obtained through OCR and the document enters the normal processing workflow & Draft entry: OCR text was obtained and the document entered the processing workflow. To be validated against an execution record & Pass\\
+TC02 & Upload a scanned or image-based PDF that needs OCR & Text is obtained through OCR and the document enters the normal processing workflow & OCR text was obtained and the document moved into the workflow. To be confirmed against an execution record & Pass\\
 \hline
-TC03 & Upload of an unsupported file type or a corrupted PDF & The validation stage does not pass the file to extraction or OCR (Section~3.2.1) and the interface indicates that the file cannot be processed & Draft entry: the file was not passed to extraction and a message was shown. To be validated; the exact message is to be recorded & Pass\\
+TC03 & Upload an unsupported file type or a corrupted PDF & Validation stops the file before extraction or OCR (Section~3.2.1) and the interface says it cannot be processed & The file was not passed on and a message was shown. To be confirmed, and the exact message still needs to be recorded & Pass\\
 \hline
-TC04 & Upload of a scanned PDF of low image quality & OCR produces text complete enough for reliable preprocessing, chunking, and retrieval & Draft entry: extracted text was incomplete for the low-quality scan. This is consistent with the OCR limitation stated in Section~6.1. To be validated & Fail\\
+TC04 & Upload a low-quality scanned PDF & OCR returns text complete enough for reliable preprocessing, chunking and retrieval & The extracted text was incomplete for the low-quality scan, which fits the OCR limitation in Section~6.1. To be confirmed & Fail\\
 \end{longtable}
 }
 
-Test cases TC01 to TC04 examine the entry point of the workflow. TC01 and TC02 check that a digital PDF and a scanned PDF are both accepted, the second depending on OCR. TC03 checks that the validation stage described in Section~3.2.1 stops an unsupported or corrupted file from reaching extraction. TC04 checks the quality of the text obtained from a low-quality scan. Its provisional failure is consistent with the OCR limitation in Section~6.1: extraction errors can affect preprocessing, chunking, retrieval, and response generation, so every later module depends on this stage.
+TC01 and TC02 check that both a digital PDF and a scanned one get through the front door, the second relying on OCR. TC03 checks that the validation stage from Section~3.2.1 keeps an unsupported or corrupted file away from extraction. TC04 looks at the quality of text coming out of a poor scan, and its provisional failure is no surprise: OCR errors travel downstream and can affect preprocessing, chunking, retrieval and the final response. Every later module depends on this one, which is why upload validation and OCR quality matter more than they might first appear. A system that cannot tell a clean PDF from an unreadable scan will give shaky answers however good its retrieval is.
 
-The testing of the Document Upload Module also highlights the importance of validating document quality and format before initiating further processing. The system is expected to distinguish between digitally generated PDFs and scanned documents that require Optical Character Recognition (OCR). Proper validation helps prevent unsupported or unreadable files from entering the analysis pipeline. The results also indicate that document quality can influence the accuracy of text extraction and subsequent legal document analysis. Therefore, upload validation and OCR performance are important factors in ensuring the reliability of LexiClear.
 \needspace{18\baselineskip}
 \subsection{Document Analysis Module}
-Table~\ref{tab:analysis} lists the 4 test cases for this module (TC05 to TC08). Provisionally, 3 passed and 1 failed.
+Table~\ref{tab:analysis} lists the four test cases for this module (TC05 to TC08). Provisionally, three passed and one failed.
 {\footnotesize
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
@@ -2226,23 +2230,23 @@ Table~\ref{tab:analysis} lists the 4 test cases for this module (TC05 to TC08). 
 \endfoot
 \hline
 \endlastfoot
-TC05 & Request structured analysis of the processed rental agreement through the backend analysis endpoint & Output is organised into summary, key clauses, risks, obligations, rights, and required actions, where applicable & The endpoint returned structured information for the document (Section~4.3.2) & Pass\\
+TC05 & Request structured analysis of the processed rental agreement through the backend analysis endpoint & Output is organised into summary, key clauses, risks, obligations, rights and required actions, where applicable & The endpoint returned structured information for the document (Section~4.3.2) & Pass\\
 \hline
-TC06 & Generation of the document summary section & A summary conveying the purpose and main content of the document is generated and grounded in the uploaded document & Draft entry: a document-grounded summary was displayed. To be validated against an execution record & Pass\\
+TC06 & Generate the document summary & A summary of the document's purpose and main content, grounded in the uploaded file & A document-grounded summary was displayed. To be confirmed against an execution record & Pass\\
 \hline
-TC07 & Generation of the required actions section & Actions that the user must complete are listed where the document specifies them & Draft entry: required actions were listed for the tested document. To be validated against an execution record & Pass\\
+TC07 & Generate the required actions section & Actions the user must complete are listed wherever the document specifies them & Required actions were listed for the tested document. To be confirmed against an execution record & Pass\\
 \hline
-TC08 & Analysis of a lengthy document containing many clauses & Every analysis category is populated and consistent with the document content & Draft entry: coverage of the categories was not uniform for the lengthy document. Category correctness was not assessed by experts (Section~4.3.2). To be validated & Fail\\
+TC08 & Analyse a lengthy document with many clauses & Every analysis category is filled in and agrees with the document & Coverage of the categories was uneven for the long document, and category correctness was not checked by experts (Section~4.3.2). To be confirmed & Fail\\
 \end{longtable}
 }
 
-Test cases TC05 to TC08 examine the structured analysis produced after a document has been processed. TC05 checks that the output is organised into its categories, while TC06 and TC07 check the summary and the required actions individually. TC08 checks whether every category is populated for a lengthy document with many clauses. Its provisional failure reflects the limitation that the correctness of the analysis was not assessed by experts, so the generated analysis may require verification against the original document (Section~6.1). The four cases therefore cover the presence of each output category and the behaviour of the analysis on a longer document, and not the legal correctness of its content, which the functional tests do not establish.
+TC05 confirms that the output comes back sorted into its categories, and TC06 and TC07 look at the summary and the required actions on their own. TC08 asks the harder question of whether every category is populated when the document is long and clause-heavy. It failed provisionally because coverage was uneven and because nobody with legal expertise has reviewed whether the categories are correct, so the analysis still has to be read against the original document (Section~6.1).
 
-The Document Analysis Module serves as the core processing component of LexiClear by converting the uploaded legal document into structured and understandable information. It organizes the analysis into relevant categories, including summaries, key clauses, risks, rights, obligations, and required actions wherever applicable. This structured approach helps users understand the contents of lengthy legal documents without having to interpret every section manually. The testing also highlights the importance of maintaining consistent analysis across documents of different lengths and complexity. The limitation observed in TC08 indicates that further evaluation is required to ensure that all analysis categories are populated correctly when processing lengthy documents. Improvements in document processing and output validation can enhance the completeness, consistency, and reliability of the overall analysis.
+It is worth being clear about what these four cases do and do not show. They show that each output category exists and that the analysis behaves on a longer document. They do not show that the content is legally right. Making the analysis dependable across documents of different lengths is the main thing this module still needs. In the above Test Cases we can see that there ahs been 3 pass cases for TC05, TC06 and TC07. Then only for TC08 we have one failed case.
 
 \needspace{18\baselineskip}
 \subsection{Key Clause Extraction Module}
-Table~\ref{tab:clause} lists the 3 test cases for this module (TC09 to TC11). Provisionally, 2 passed and 1 failed.
+Table~\ref{tab:clause} lists the three test cases for this module (TC09 to TC11). Provisionally, two passed and one failed.
 {\footnotesize
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
@@ -2262,21 +2266,25 @@ Table~\ref{tab:clause} lists the 3 test cases for this module (TC09 to TC11). Pr
 \endfoot
 \hline
 \endlastfoot
-TC09 & Identification of key clauses in the rental agreement, such as duration, payment, and termination conditions & The key clauses are identified and presented in the key clauses section & Draft entry: key clauses were identified and displayed. To be validated against an execution record & Pass\\
+TC09 & Identify key clauses in the rental agreement, such as duration, payment and termination & The key clauses are found and shown in the key clauses section & Key clauses were identified and displayed. To be confirmed against an execution record & Pass\\
 \hline
-TC10 & Presentation of an identified clause in simplified language & The clause is explained in language that a non-specialist user can follow while preserving its meaning & Draft entry: clauses were presented in simplified wording. To be validated against an execution record & Pass\\
+TC10 & Present an identified clause in simplified language & The clause is explained so that a non-specialist can follow it, without losing its meaning & Clauses were presented in simplified wording. To be confirmed against an execution record & Pass\\
 \hline
-TC11 & Traceability of an extracted clause to its source clause or section in the document & The source clause or section supporting each extracted clause is indicated to the user & Draft entry: no source reference was shown with the extracted clause. Source and clause-level traceability is identified as future work (Section~6.2) & Fail\\
+TC11 & Trace an extracted clause back to its source clause or section & The user is shown which clause or section supports each extracted clause & No source reference was shown alongside the extracted clause. Source and clause-level traceability is listed as future work (Section~6.2) & Fail\\
 \end{longtable}
 }
 
-Test cases TC09 to TC11 examine the key clause identification described in the methodology. TC09 checks that important clauses, such as duration, payment, and termination conditions, are identified. TC10 checks that each clause is explained in language that a non-specialist user can follow without losing its meaning. TC11 checks whether the user can trace an extracted clause to its source clause or section. Source and clause-level traceability is listed as future work in Section~6.2, which is why this case is provisionally marked as failed. Together, the three cases separate what is identified, how it is explained, and whether it can be verified. These cases are not intended to measure legal correctness. They verify that the clause section exists and is understandable, and they identify traceability as the area that needs further development before a user can check the clauses against the source. As TC11 is the only provisionally failed case in this module, the provisional pass rate of the module is 66.67\%.
+These three cases separate what is found, how it is explained, and whether it can be checked. TC09 looks at whether the important clauses, such as duration, payment and termination, are picked out. TC10 looks at whether they are explained in plain language without changing their meaning. TC11 asks whether the user can see where in the document a clause came from, and it is the one that fails: traceability is not built yet, and Section~6.2 lists it as future work. With one failure out of three, the provisional pass rate for the module is 66.67\%.
 
-The results of this module emphasize that extracting key clauses alone is not sufficient; users must also be able to understand and verify the information presented. Providing clear explanations in simplified language helps users interpret important contractual terms without requiring extensive legal knowledge. In addition, linking each extracted clause to its original location in the document improves transparency and makes verification easier. The failure observed in TC11 highlights the need to strengthen source-level traceability so that users can identify where each extracted clause originates. Improving this aspect would make the clause extraction process more reliable, understandable, and useful for legal document analysis.
+Pulling out clauses is only half the job. People also need to understand them and be able to verify them, and the second part is missing for now. Until each clause points back to its source, the user has to search the original document themselves to confirm what the system says. These cases are not meant to judge legal correctness. They check that the clause section exists and reads clearly, and they show where the next piece of work lies.
+
+Clause extraction is also where the quality of earlier stages becomes visible. A clause can only be picked out if the text around it was extracted cleanly and kept together when the document was chunked. When a clause such as the termination condition is split across two chunks, or contains a stray OCR error, the explanation shown to the user can end up incomplete even though the clause itself was found. For this reason we read TC09 and TC10 as tests of the whole pipeline up to that point, not just of the clause section on its own.
+
+TC10 deserves one more comment. Simplifying a clause always risks changing what it says, and in a legal document a small change in wording, such as replacing ``shall'' with ``may'', alters the obligation. The aim of the simplified version is to help the reader understand the original, not to stand in for it. That is also why TC11 matters more than its single failure suggests: once each clause points to its source, a user can compare the plain-language version with the original wording and decide for themselves whether the simplification is fair.
 
 \needspace{18\baselineskip}
 \subsection{Rights and Obligations Extraction Module}
-Table~\ref{tab:rights} lists the 4 test cases for this module (TC12 to TC15). Provisionally, 3 passed and 1 failed.
+Table~\ref{tab:rights} lists the four test cases for this module (TC12 to TC15). Provisionally, three passed and one failed.
 {\footnotesize
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
@@ -2296,20 +2304,27 @@ Table~\ref{tab:rights} lists the 4 test cases for this module (TC12 to TC15). Pr
 \endfoot
 \hline
 \endlastfoot
-TC12 & Extraction of the rights available to each party in the agreement & The rights are listed in the rights section & Draft entry: rights were listed for the tested document. To be validated against an execution record & Pass\\
+TC12 & Extract the rights available to each party & The rights are listed in the rights section & Rights were listed for the tested document. To be confirmed against an execution record & Pass\\
 \hline
-TC13 & Extraction of the obligations of each party in the agreement & The obligations are listed in the obligations section & Draft entry: obligations were listed for the tested document. To be validated against an execution record & Pass\\
+TC13 & Extract the obligations of each party & The obligations are listed in the obligations section & Obligations were listed for the tested document. To be confirmed against an execution record & Pass\\
 \hline
-TC14 & Separation of the responsibilities of different parties, such as landlord and tenant & Rights and obligations are attributed to the correct party & Draft entry: responsibilities were attributed to the parties in the tested document. To be validated against an execution record & Pass\\
+TC14 & Separate the responsibilities of different parties, such as landlord and tenant & Rights and obligations are assigned to the correct party & Responsibilities were assigned to the parties in the tested document. To be confirmed against an execution record & Pass\\
 \hline
-TC15 & Extraction of obligations that are subject to exceptions or cross-references & Conditions, exceptions, and cross-referenced provisions are captured together with the obligation & Draft entry: conditional parts of some obligations were not captured. To be validated & Fail\\
+TC15 & Extract obligations that carry exceptions or cross-references & Conditions, exceptions and cross-referenced provisions are captured along with the obligation & The conditional parts of some obligations were not captured. To be confirmed & Fail\\
 \end{longtable}
 }
 
-Test cases TC12 to TC15 examine the rights and obligations sections. TC12 and TC13 check that rights and obligations are listed, and TC14 checks that they are attributed to the correct party, such as the landlord or the tenant in a rental agreement. TC15 checks obligations that are subject to exceptions or cross-references, where the condition must be captured together with the obligation. Its provisional failure indicates that conditional parts of an obligation may be missed, so the listed obligations should be read together with the original clauses. These cases are limited to the information stated in the document. They do not assess whether a right or an obligation is legally enforceable, which the functional tests do not establish. As only TC15 is provisionally failed, the provisional pass rate of this module is 75.00\%, as shown in Table~\ref{tab:test-summary}.
+TC12 and TC13 check that rights and obligations are listed at all, and TC14 checks that they land with the right party, for instance the landlord or the tenant in a rental agreement. TC15 is the difficult one. Obligations often come with exceptions or point to other clauses, and the condition has to travel with the obligation for the summary to be honest. In our draft run some of those conditional parts were lost, so the obligations list should be read together with the original clauses.
+
+These cases only deal with what the document states. Whether a right or obligation could actually be enforced is a legal question the functional tests do not touch. With one failure in four, the provisional pass rate here is 75.00\%, as Table~\ref{tab:test-summary} shows.
+
+A rental agreement shows why TC14 and TC15 are worth testing. The same document puts duties on the landlord and the tenant, and a single sentence can switch between the two. A clause saying that rent is due on the fifth of each month is an obligation for the tenant and a right for the landlord. If the system lists it under the wrong party, the user gets a tidy answer that points the wrong way. This is a quieter kind of error than a missing clause, because the output still looks complete and correct.
+
+TC15 is harder for a related reason. Phrases such as ``unless otherwise agreed'', ``subject to clause 8'' or ``provided that notice is given'' change what an obligation means, and they often sit in a different sentence from the obligation itself. A summary that keeps the duty and drops the condition reads cleanly but overstates what the document requires. We treat this as the main weakness of the module, and it is why the obligations section should be used as a quick guide to where to look and not as a replacement for reading the clause.
+
 \needspace{18\baselineskip}
 \subsection{Risk Analysis Module}
-Table~\ref{tab:risk} lists the 4 test cases for this module (TC16 to TC19). Provisionally, 3 passed and 1 failed.
+Table~\ref{tab:risk} lists the four test cases for this module (TC16 to TC19). Provisionally, three passed and one failed.
 {\footnotesize
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
@@ -2329,23 +2344,27 @@ Table~\ref{tab:risk} lists the 4 test cases for this module (TC16 to TC19). Prov
 \endfoot
 \hline
 \endlastfoot
-TC16 & Identification of risks and conditions in the document & Risks and conditions stated in the document are listed in the risks section & Draft entry: risks and conditions were listed for the tested document. To be validated against an execution record & Pass\\
+TC16 & Identify risks and conditions in the document & Risks and conditions stated in the document appear in the risks section & Risks and conditions were listed for the tested document. To be confirmed against an execution record & Pass\\
 \hline
-TC17 & Identification of restrictions and penalty-related provisions & Restrictions and penalty-related provisions present in the document are highlighted & Draft entry: restrictions and penalty-related provisions were highlighted. To be validated against an execution record & Pass\\
+TC17 & Identify restrictions and penalty-related provisions & Restrictions and penalty provisions in the document are highlighted & Restrictions and penalty provisions were highlighted. To be confirmed against an execution record & Pass\\
 \hline
-TC18 & Analysis of a document that states no explicit risk provisions & The risks section does not present unsupported risks and indicates that none apply, where applicable & Draft entry: no unsupported risk was presented. To be validated against an execution record & Pass\\
+TC18 & Analyse a document with no explicit risk provisions & The risks section does not invent risks, and says none apply where appropriate & No unsupported risk was shown. To be confirmed against an execution record & Pass\\
 \hline
-TC19 & Consistency of the identified risks with an expert legal assessment & The identified risks agree with the assessment of a qualified legal reviewer & Draft entry: expert comparison was not available. Generated risks may require verification against the original document (Section~6.1) & Fail\\
+TC19 & Compare identified risks with an expert legal assessment & The identified risks agree with a qualified legal reviewer's assessment & No expert comparison was available, so generated risks still need checking against the original document (Section~6.1) & Fail\\
 \end{longtable}
 }
 
-Test cases TC16 to TC19 examine the risks and conditions section. TC16 and TC17 check that risks, conditions, restrictions, and penalty-related provisions that appear in the document are listed or highlighted. TC18 checks the opposite case, a document without explicit risk provisions, where the section should not present unsupported risks. TC19 checks agreement with a qualified legal reviewer. It is provisionally marked as failed because no expert comparison was available, and Section~6.1 notes that generated risks may require verification against the original document. The risk section should be read as an aid to attention and not as a legal opinion. It points the reader to provisions that may need closer reading, and the system is intended as an information-access aid and not as a substitute for professional legal advice (Section 6.1).
+TC16 and TC17 check that risks, conditions, restrictions and penalties that really are in the document get listed or highlighted. TC18 covers the opposite situation: when a document has no explicit risk provisions, the section should stay quiet rather than make something up. TC19 asks for agreement with a qualified legal reviewer. We could not do that comparison, so it is marked as failed for now.
 
-The testing of the Risk Analysis Module focuses on the system's ability to identify potentially unfavorable conditions and highlight provisions that may require additional attention. By examining risks, restrictions, penalties, and other relevant clauses, LexiClear helps users become more aware of possible concerns within a legal document. The module also considers cases where no explicit risks are present, ensuring that the system does not unnecessarily generate unsupported warnings. However, automated risk identification should be treated as an initial assessment rather than a final legal opinion. The failure observed in TC19 highlights the importance of comparing identified risks with expert legal assessments. Further improvement in this area can enhance the accuracy and reliability of risk analysis while maintaining the need for professional legal verification.
+The risk section is best read as a prompt to look more closely, not as a legal opinion. It points the reader to provisions that may deserve attention, and an automated first pass of this kind cannot replace professional advice (Section~6.1).
+
+Risk is the hardest category to test, because what counts as a risk depends on who is reading. A security deposit that is refundable only after a long notice period is a minor point for a landlord and a real worry for a tenant. For this reason the module is checked against what the document states, such as penalties, restrictions, lock-in periods and conditions for termination, and not against what any one reader might be afraid of. TC16 and TC17 test that these provisions are picked up. TC18 tests the reverse, because a risk section that always finds something would be worse than one that sometimes says there is nothing to report.
+
+TC19 is marked as failed because we had no way to run it properly, not because we saw the system get a risk wrong. Without a legal reviewer, there was nobody to say whether the risks the system listed were the ones that matter, or whether an important one was missed. The honest reading of this module is therefore narrow. It can point the user to the passages worth reading carefully, and it cannot say how serious they are.
 
 \needspace{18\baselineskip}
 \subsection{Jurisdictional Context Module}
-Table~\ref{tab:juris} lists the 4 test cases for this module (TC20 to TC23). Provisionally, 3 passed and 1 failed.
+Table~\ref{tab:juris} lists the four test cases for this module (TC20 to TC23). Provisionally, three passed and one failed.
 {\footnotesize
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
@@ -2365,20 +2384,21 @@ Table~\ref{tab:juris} lists the 4 test cases for this module (TC20 to TC23). Pro
 \endfoot
 \hline
 \endlastfoot
-TC20 & Submission of a request with the configured jurisdictional context enabled & The jurisdictional context is passed together with the retrieved document information before the response is generated & Integration of jurisdictional context into response generation was demonstrated (Section~4.3.5) & Pass\\
+TC20 & Submit a request with the configured jurisdictional context enabled & The jurisdictional context is passed together with the retrieved document information before the response is generated & Integration of jurisdictional context into response generation was demonstrated (Section~4.3.5) & Pass\\
 \hline
-TC21 & Submission of a request when no jurisdictional context is configured & The response is generated from the document content without jurisdictional information & Draft entry: the response was generated from the document content only. To be validated against an execution record & Pass\\
+TC21 & Submit a request when no jurisdictional context is configured & The response is generated from the document content alone & The response was generated from the document content only. To be confirmed against an execution record & Pass\\
 \hline
-TC22 & Inclusion of jurisdictional context in the structured analysis output & The analysis output incorporates the configured jurisdictional information where relevant & Draft entry: jurisdictional information appeared in the analysis output. To be validated against an execution record & Pass\\
+TC22 & Include jurisdictional context in the structured analysis output & The analysis output reflects the configured jurisdiction where relevant & Jurisdictional information appeared in the analysis output. To be confirmed against an execution record & Pass\\
 \hline
-TC23 & Jurisdiction-specific legal accuracy of a generated response & The response is consistent with the legal sources of the selected jurisdiction & Draft entry: accuracy was not established. Jurisdiction-specific legal accuracy was not evaluated (Sections~4.3.5 and~6.1) & Fail\\
+TC23 & Check the jurisdiction-specific legal accuracy of a response & The response is consistent with the legal sources of the selected jurisdiction & Accuracy was not established, since jurisdiction-specific legal accuracy was not evaluated (Sections~4.3.5 and~6.1) & Fail\\
 \end{longtable}
 }
 
-Test cases TC20 to TC23 examine jurisdiction grounding. TC20 checks that the jurisdictional context is combined with the retrieved document information before a response is generated (Section~4.3.5). TC21 checks that a response is still produced from the document when no context is configured, and TC22 checks that the analysis output includes the jurisdictional information where it is relevant. TC23 checks legal accuracy for a selected jurisdiction. It is provisionally marked as failed because jurisdiction grounding was evaluated from an integration perspective and no benchmark for jurisdiction-specific accuracy was used (Section~6.1). The jurisdiction cases therefore confirm that the context is passed through the workflow, while the accuracy of the resulting jurisdiction-specific statements remains open for future evaluation (Section~6.2).
+TC20 checks that the jurisdictional context is combined with the retrieved document content before generation (Section~4.3.5). TC21 makes sure a sensible response still comes out when no jurisdiction is configured, and TC22 checks that the context shows up in the analysis output where it is relevant. TC23 asks whether the jurisdiction-specific statements are legally accurate. That one fails provisionally, because we tested jurisdiction grounding as an integration feature and did not use any benchmark for accuracy (Section~6.1). In short, we can show that the context is passed through the workflow, but whether what comes out is right for a given jurisdiction is still open (Section~6.2).
+
 \needspace{18\baselineskip}
 \subsection{Ask LexiClear -- RAG Module}
-Table~\ref{tab:rag} lists the 6 test cases for this module (TC24 to TC29). Provisionally, 4 passed and 2 failed.
+Table~\ref{tab:rag} lists the six test cases for this module (TC24 to TC29). Provisionally, four passed and two failed.
 {\footnotesize
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
@@ -2398,27 +2418,27 @@ Table~\ref{tab:rag} lists the 6 test cases for this module (TC24 to TC29). Provi
 \endfoot
 \hline
 \endlastfoot
-TC24 & Submission of a document-specific question through Ask LexiClear & A response grounded in the uploaded document is generated & Document-specific question answering was demonstrated through the frontend (Section~4.2) & Pass\\
+TC24 & Ask a document-specific question through Ask LexiClear & A response grounded in the uploaded document is generated & Document-specific question answering was demonstrated through the frontend (Section~4.2) & Pass\\
 \hline
-TC25 & Submission of a follow-up question after an initial answer & The follow-up question is answered in the context of the same document & Draft entry: the follow-up question was answered for the same document. To be validated against an execution record & Pass\\
+TC25 & Ask a follow-up question after an initial answer & The follow-up is answered in the context of the same document & The follow-up was answered for the same document. To be confirmed against an execution record & Pass\\
 \hline
-TC26 & Retrieval of relevant document chunks for 80 document-specific questions & Relevant chunks are retrieved for each question & Context Precision of 0.986 was recorded (Section~4.3.3) & Pass\\
+TC26 & Retrieve relevant document chunks for 80 document-specific questions & Relevant chunks are retrieved for each question & Context Precision of 0.986 was recorded (Section~4.3.3) & Pass\\
 \hline
-TC27 & Comparison of generated answers with expected answers for 80 questions & Generated answers correspond semantically to the expected answers & QA Accuracy of 0.7625 was recorded, i.e., 61 of 80 questions met the similarity threshold (Section~4.3.4, Table~4.1) & Pass\\
+TC27 & Compare generated answers with expected answers for 80 questions & Generated answers match the expected answers in meaning & QA Accuracy of 0.7625 was recorded, meaning 61 of 80 questions met the similarity threshold (Section~4.3.4, Table~4.1) & Pass\\
 \hline
-TC28 & Grounding of generated statements in the retrieved context & Every statement in a response is supported by the retrieved context & Faithfulness of 0.500 was recorded, indicating that grounding was not uniform (Section~4.3.3) & Fail\\
+TC28 & Check that generated statements are grounded in the retrieved context & Every statement in a response is supported by the retrieved context & Faithfulness of 0.500 was recorded, so grounding was not uniform (Section~4.3.3) & Fail\\
 \hline
-TC29 & Retrieval of all context needed to answer a question & The retrieved context covers all information needed for the expected answer & Context Recall of 0.500 was recorded, indicating that retrieval was not uniformly complete (Section~4.3.3) & Fail\\
+TC29 & Check that all the context needed for an answer is retrieved & The retrieved context covers everything the expected answer needs & Context Recall of 0.500 was recorded, so retrieval was not uniformly complete (Section~4.3.3) & Fail\\
 \end{longtable}
 }
 
-Test cases TC24 to TC29 combine functional and measured checks. TC24 and TC25 cover document-specific questions and follow-up questions. TC26 to TC29 use the values reported in Section~4.3 for 80 questions: Context Precision, QA Accuracy, Faithfulness, and Context Recall. The two failed cases correspond to the Faithfulness and Context Recall values of 0.500, which show that grounding and retrieval completeness were not uniform.
+This module mixes functional checks with measured ones. TC24 and TC25 cover ordinary questions and follow-ups. TC26 to TC29 reuse the figures from Section~4.3 for the 80-question set: Context Precision, QA Accuracy, Faithfulness and Context Recall. The two failures are the Faithfulness and Context Recall scores of 0.500, which tell us that grounding and completeness of retrieval were inconsistent.
 
-The evaluation of the Ask LexiClear module focuses on the quality and reliability of responses generated using retrieved document context. The functional test cases verify whether users can ask questions about the uploaded document and receive relevant answers to follow-up queries. The measured results provide additional insight into retrieval quality, answer accuracy, and the extent to which generated responses remain supported by the retrieved information. The Faithfulness and Context Recall scores indicate that improvements are still needed to ensure consistent grounding and complete retrieval of relevant information. Enhancing document chunk retrieval and context selection can help improve the reliability of the question-answering process.
+The picture here is mixed. Retrieved context was very precise (0.986) and about three quarters of the answers matched the references, yet roughly half the time the generated text was not fully backed by the retrieved passages, or the passages did not cover everything needed. Better chunk retrieval and tighter context selection are the obvious places to start.
 
 \needspace{18\baselineskip}
 \subsection{Multilingual Support Module}
-Table~\ref{tab:multi} lists the 4 test cases for this module (TC30 to TC33). Provisionally, 3 passed and 1 failed.
+Table~\ref{tab:multi} lists the four test cases for this module (TC30 to TC33). Provisionally, three passed and one failed.
 {\footnotesize
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
@@ -2438,24 +2458,27 @@ Table~\ref{tab:multi} lists the 4 test cases for this module (TC30 to TC33). Pro
 \endfoot
 \hline
 \endlastfoot
-TC30 & Selection of English as the output language & The response is presented in English & Draft entry: the response was presented in English. To be validated against an execution record & Pass\\
+TC30 & Select English as the output language & The response is shown in English & The response was shown in English. To be confirmed against an execution record & Pass\\
 \hline
-TC31 & Selection of Hindi as the output language for an analysis or answer & A Hindi response conveying the same document-grounded information is shown & Draft entry: a Hindi response was shown. No Hindi-specific observation is recorded in the report. To be validated & Pass\\
+TC31 & Select Hindi as the output language for an analysis or answer & A Hindi response carrying the same document-grounded information is shown & A Hindi response was shown. The report records no Hindi-specific observation, so this is to be confirmed & Pass\\
 \hline
-TC32 & Selection of Kannada as the output language for an analysis or answer & A Kannada response conveying the same document-grounded information is shown & Draft entry: a Kannada response was shown. To be validated against an execution record & Pass\\
+TC32 & Select Kannada as the output language for an analysis or answer & A Kannada response carrying the same document-grounded information is shown & A Kannada response was shown. To be confirmed against an execution record & Pass\\
 \hline
-TC33 & Translation of legal terminology into Hindi and Kannada & Legal terms are translated accurately and consistently & Draft entry: terminology accuracy was not established. No expert linguistic assessment or translation-quality scores were obtained (Sections~4.3.6 and~6.1) & Fail\\
+TC33 & Translate legal terminology into Hindi and Kannada & Legal terms are translated accurately and consistently & Terminology accuracy was not established, as no expert linguistic review or translation-quality scores were obtained (Sections~4.3.6 and~6.1) & Fail\\
 \end{longtable}
 }
 
-Test cases TC30 to TC33 examine the language selection feature. TC30 to TC32 check that the response can be presented in English, Hindi, and Kannada while conveying the same document-grounded information. TC33 checks the translation of legal terminology. It is provisionally marked as failed because no expert linguistic assessment or standardized translation metric was used, so the results establish functional multilingual support rather than a measurement of translation quality (Section~6.1). Because the same document-grounded information is expected in every language, a change of language should change only the wording of the response and not the facts that it reports. TC30 to TC32 verify that the output language can be selected, and TC33 identifies terminology quality as the part still to be validated.
+TC30 to TC32 check that the response can be shown in English, Hindi and Kannada while carrying the same document-grounded facts. Changing the language should change the wording and nothing else. TC33 checks how legal terms are translated, and it fails provisionally because we had no expert linguistic assessment and no standard translation metric to lean on. So what we have established is that language selection works, not that the translations are good (Section~6.1).
 
-The Multilingual Support Module aims to make legal information more accessible to users who prefer different languages. By supporting English, Hindi, and Kannada, LexiClear allows users to interact with the system in a language they are comfortable with while retaining the document-grounded information. An important aspect of this functionality is maintaining consistency in the meaning of legal terms during language selection and translation. The testing results demonstrate the language selection functionality, while TC33 highlights the need for further validation of legal terminology and translation accuracy. Future improvements should focus on preserving the original legal meaning, using appropriate terminology, and evaluating translations through standardized linguistic assessments. This will help make the multilingual feature more reliable and understandable for users.
+Getting the meaning of a legal term to survive translation is the real challenge for this feature. Future work should preserve the original legal sense, use consistent terminology, and bring in proper linguistic evaluation.
 
+Legal terms are where translation tends to go wrong. Words such as ``lessor'', ``lien'' or ``indemnity'' have no everyday equivalent in Hindi or Kannada, so a translator has to choose between a literal word that sounds odd, a borrowed English term and a longer explanation. Each choice is defensible, but mixing them within one response confuses the reader. If the same term appears as one word in the summary and another in the answer, a user may reasonably think two different things are being described. This is the main reason TC33 asks for consistency as well as accuracy.
+
+Our design helps with part of the problem. The response is generated first, from the retrieved document context, and then presented in the language the user selects. The facts come from the document and only the wording changes. That keeps the three languages aligned with each other, but it does not make the wording correct. A fluent Kannada sentence can still describe a clause slightly differently from the original English, and a reader who does not know English has no easy way to notice. For this reason we say in the report that the multilingual feature works, and we do not say that the translations are reliable.
 
 \needspace{18\baselineskip}
 \subsection{Text-to-Speech Module}
-Table~\ref{tab:tts} lists the 5 test cases for this module (TC34 to TC38). Provisionally, 4 passed and 1 failed.
+Table~\ref{tab:tts} lists the five test cases for this module (TC34 to TC38). Provisionally, four passed and one failed.
 {\footnotesize
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
@@ -2475,22 +2498,25 @@ Table~\ref{tab:tts} lists the 5 test cases for this module (TC34 to TC38). Provi
 \endfoot
 \hline
 \endlastfoot
-TC34 & Passing a generated Kannada legal statement to the text-to-speech component & A WAV audio file is generated & A WAV file was generated successfully using the available Apple MPS device configuration (Sections~4.2 and~4.3.7) & Pass\\
+TC34 & Pass a generated Kannada legal statement to the text-to-speech component & A WAV audio file is generated & A WAV file was generated successfully using the available Apple MPS device configuration (Sections~4.2 and~4.3.7) & Pass\\
 \hline
-TC35 & Selecting the Listen control on a displayed response & Speech playback of the response begins & Draft entry: playback began. The frontend provides the control (Section~4.3.7). To be validated & Pass\\
+TC35 & Select the Listen control on a displayed response & Speech playback of the response begins & Playback began, and the frontend provides the control (Section~4.3.7). To be confirmed & Pass\\
 \hline
-TC36 & Selecting the Stop control while audio is playing & Playback ends & Draft entry: playback ended. The frontend provides the control (Section~4.3.7). To be validated & Pass\\
+TC36 & Select the Stop control while audio is playing & Playback ends & Playback ended, and the frontend provides the control (Section~4.3.7). To be confirmed & Pass\\
 \hline
-TC37 & Speech output for an English or Hindi response & Audio corresponding to the displayed response is produced & Draft entry: audio was produced for the response. To be validated against an execution record & Pass\\
+TC37 & Produce speech for an English or Hindi response & Audio matching the displayed response is produced & Audio was produced for the response. To be confirmed against an execution record & Pass\\
 \hline
-TC38 & Pronunciation and intelligibility of legal terminology in the generated speech & Legal terms are pronounced clearly and consistently across the supported languages & Draft entry: speech quality was not established. Speech quality was not systematically measured (Sections~4.3.7 and~6.1) & Fail\\
+TC38 & Check pronunciation and intelligibility of legal terms in the generated speech & Legal terms are pronounced clearly and consistently across the supported languages & Speech quality was not established, because it was not systematically measured (Sections~4.3.7 and~6.1) & Fail\\
 \end{longtable}
 }
 
-Test cases TC34 to TC38 examine speech output. TC34 checks that a Kannada legal statement produces a WAV file, which was observed during development testing (Section~4.3.7). TC35 and TC36 check the Listen and Stop controls, and TC37 checks speech for an English or Hindi response. TC38 checks the pronunciation and intelligibility of legal terminology. It is provisionally marked as failed because speech quality was evaluated functionally and not through a formal benchmark (Section~6.1). The Listen and Stop controls belong to the frontend accessibility workflow, whereas WAV generation belongs to the text-to-speech component, so the five cases cover both the generation of audio and the way the user controls it.
+TC34 is the one we actually saw happen during development: a Kannada legal statement went in and a WAV file came out (Section~4.3.7). TC35 and TC36 cover the Listen and Stop buttons, and TC37 checks that English or Hindi responses can be spoken too. TC38 asks whether legal terms sound right when spoken, and it fails provisionally because speech was only checked functionally and not against any formal quality benchmark (Section~6.1). Between them, the five cases cover both halves of the feature: producing the audio, and giving the user control over it. 
+
+Speech is harder to check than text, because a wrong word in written output can be spotted at a glance, while a mispronounced one can only be caught by listening. Legal terms, section numbers, dates and amounts of money are the places where it is most likely to matter. Kannada and Hindi also differ from English in how numbers and borrowed terms are read aloud, so one clean English result tells us little about the other two languages. We therefore treat the passes in this module as evidence that the feature runs and that the controls respond. Whether the audio is clear enough for someone to depend on it still has to be tested by listening, ideally with people who speak the language.
+
 \needspace{18\baselineskip}
 \subsection{System Performance and Error Handling Module}
-Table~\ref{tab:perf} lists the 4 test cases for this module (TC39 to TC42). Provisionally, 2 passed and 2 failed.
+Table~\ref{tab:perf} lists the four test cases for this module (TC39 to TC42). Provisionally, two passed and two failed.
 {\footnotesize
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
@@ -2510,23 +2536,22 @@ Table~\ref{tab:perf} lists the 4 test cases for this module (TC39 to TC42). Prov
 \endfoot
 \hline
 \endlastfoot
-TC39 & End-to-end workflow of upload, analysis, and question answering through the frontend and the FastAPI backend & Each frontend operation is handled by the corresponding backend functionality & The frontend was connected to the upload, analysis, Ask LexiClear, and speech-related interactions in the macOS development environment (Section~4.2) & Pass\\
+TC39 & Run the end-to-end workflow of upload, analysis and question answering through the frontend and the FastAPI backend & Each frontend operation is handled by the matching backend functionality & The frontend was connected to the upload, analysis, Ask LexiClear and speech interactions in the macOS development environment (Section~4.2) & Pass\\
 \hline
-TC40 & Submission of an invalid request, such as a question without a processed document & The system does not crash and the interface indicates that the request cannot be completed & Draft entry: the system remained operational and a message was shown. To be validated; the exact message is to be recorded & Pass\\
+TC40 & Submit an invalid request, such as a question with no processed document & The system does not crash and the interface says the request cannot be completed & The system stayed up and a message was shown. To be confirmed, and the exact message still needs to be recorded & Pass\\
 \hline
-TC41 & Processing of a lengthy document within an acceptable time & Processing completes within a time that is acceptable to the user & Draft entry: the target was not demonstrated. Performance and load testing are not documented in the current evaluation (Section~4.2) & Fail\\
+TC41 & Process a lengthy document in an acceptable time & Processing finishes within a time the user would accept & Not demonstrated. Performance and load testing are not documented in the current evaluation (Section~4.2) & Fail\\
 \hline
-TC42 & Handling of several simultaneous requests & Concurrent requests are handled without failure or loss of responses & Draft entry: the target was not demonstrated. Concurrency and load testing are not documented in the current evaluation (Section~4.2) & Fail\\
+TC42 & Handle several simultaneous requests & Concurrent requests are handled without failures or lost responses & Not demonstrated. Concurrency and load testing are not documented in the current evaluation (Section~4.2) & Fail\\
 \end{longtable}
 }
 
-Test cases TC39 to TC42 examine the system as a whole. TC39 checks that the upload, analysis, and question-answering operations work together through the frontend and the backend, as described for the integration testing in Section~4.2. TC40 checks that an invalid request does not stop the system and that the interface indicates the problem. TC41 and TC42 check the processing time for a lengthy document and the handling of simultaneous requests. They are provisionally marked as failed because the report does not establish system performance (Section~4.2) and documents no load testing.
+TC39 and TC40 are the encouraging ones: the frontend and backend work together across upload, analysis and questioning, and a bad request does not bring the system down. TC41 and TC42 are the gaps. We have no recorded processing times for long documents and no concurrency tests, so both are marked as failed because the targets were never demonstrated (Section~4.2).
 
-The System Performance and Error Handling Module is important for ensuring that the different components of LexiClear operate together reliably. The testing covers the interaction between the frontend and backend, the handling of invalid requests, and the processing of documents and multiple user requests. The results indicate that the basic end-to-end workflow and invalid-request handling are functioning as expected. However, the absence of documented load-testing results means that the system's ability to handle large documents and several simultaneous requests has not yet been fully established. Future improvements should include measuring response time, testing concurrent user requests, and evaluating system behaviour under different workloads. These measures would help identify performance bottlenecks and improve the overall stability, scalability, and responsiveness of LexiClear.
-
+The basic workflow and invalid-request handling look sound. What we cannot yet say is how LexiClear behaves with big documents or several users at once. Future testing should measure response times, try concurrent requests, and look at behaviour under heavier workloads to find bottlenecks.
 
 \section{Overall Test Summary}
-Table~\ref{tab:test-summary} summarises the provisional distribution of the 42 test cases across the ten modules. The totals are draft values retained for review.
+Table~\ref{tab:test-summary} shows how the 42 test cases are distributed over the ten modules. The totals are draft values kept for review.
 
 {\footnotesize
 \setlength{\tabcolsep}{6pt}
@@ -2571,65 +2596,64 @@ System Performance and Error Handling & 4 & 2 & 2\\
 \end{longtable}
 }
 
-The provisional percentages are calculated from the totals in Table~\ref{tab:test-summary}.
+The provisional percentages follow directly from these totals.
 \begin{equation}
 \text{Pass Percentage} = \frac{30}{42}\times 100 = 71.43\%
 \end{equation}
 \begin{equation}
 \text{Fail Percentage} = \frac{12}{42}\times 100 = 28.57\%
 \end{equation}
-These percentages describe the draft test results only. They are not verified execution measurements and are to be recomputed after the entries are validated.
+These figures describe the draft results only. They are not verified execution measurements and will have to be recomputed once the entries are validated.
 
-Overall, the provisional test results provide an overview of the functional areas covered during the evaluation of LexiClear. The results indicate that the system supports the major operations, including document upload, structured analysis, clause extraction, risk identification, question answering, multilingual interaction, and speech output. However, the identified limitations show that further refinement is required in areas such as extraction accuracy, response grounding, translation quality, and performance evaluation. The test results should therefore be considered an initial assessment of the system rather than conclusive evidence of its overall accuracy or reliability. Once the provisional entries are verified through actual test execution and supporting records, the results can provide a more dependable basis for evaluating the effectiveness of LexiClear and identifying priorities for future development.
+Taken together, the results give a reasonable picture of what has been covered: upload, structured analysis, clause extraction, risk identification, question answering, multilingual output and speech all work at a basic level. The failures show where more effort is needed, namely extraction accuracy, response grounding, translation quality and performance. For now this should be read as an early assessment and not as proof of overall accuracy or reliability. Once the provisional entries are confirmed by real test runs and supporting records, the results will be a much firmer basis for judging LexiClear.
 
 \section{Test Result Analysis}
-Of the 42 test cases, 30 are provisionally marked as passed and 12 as failed. At module level, the provisional pass rates are 75.00\% for Document Upload, Document Analysis, Rights and Obligations Extraction, Risk Analysis, Jurisdictional Context, and Multilingual Support; 66.67\% for Key Clause Extraction and Ask LexiClear (RAG); 80.00\% for Text-to-Speech; and 50.00\% for System Performance and Error Handling.
+Of the 42 test cases, 30 are provisionally marked as passed and 12 as failed. By module, the provisional pass rates are 75.00\% for Document Upload, Document Analysis, Rights and Obligations Extraction, Risk Analysis, Jurisdictional Context and Multilingual Support; 66.67\% for Key Clause Extraction and Ask LexiClear (RAG); 80.00\% for Text-to-Speech; and 50.00\% for System Performance and Error Handling.
 
-The provisional failures are concentrated in areas that the report already identifies as limitations or future work. These areas are the accuracy of OCR on low-quality scans (TC04), completeness and expert verification of generated analysis (TC08, TC15, and TC19), clause-level source traceability (TC11), jurisdiction-specific legal accuracy (TC23), translation quality for legal terminology (TC33), and speech quality (TC38). Two provisional failures in the Ask LexiClear module (TC28 and TC29) correspond to the Faithfulness and Context Recall values of 0.500 reported in Section~4.3.3. The two failures in System Performance and Error Handling (TC41 and TC42) reflect that performance and load behaviour was not demonstrated in the current evaluation (Section~4.2).
-
+Most of the failures sit in areas the report already names as limitations or future work: OCR on low-quality scans (TC04), completeness and expert verification of the generated analysis (TC08, TC15 and TC19), clause-level source traceability (TC11), jurisdiction-specific accuracy (TC23), translation quality for legal terms (TC33) and speech quality (TC38). The two failures in Ask LexiClear (TC28 and TC29) correspond to the Faithfulness and Context Recall values of 0.500 in Section~4.3.3. The two in System Performance and Error Handling (TC41 and TC42) reflect the fact that performance and load behaviour were never demonstrated (Section~4.2).
 
 \section{Conclusion}
-This chapter presented a module-wise functional test suite of 42 test cases for LexiClear, covering ten modules from document upload to system performance and error handling. The provisional results show 30 passed and 12 failed cases, corresponding to a pass percentage of 71.43\% and a fail percentage of 28.57\%. These values are draft results retained for review and are not verified execution measurements.
+This chapter described a module-wise test suite of 42 cases covering everything from document upload to performance and error handling. Provisionally, 30 cases passed and 12 failed, which gives a pass percentage of 71.43\% and a fail percentage of 28.57\%. These are draft values kept for review and not verified execution measurements.
 
-The provisional failures point to the areas that require further work: OCR on low-quality scans, completeness and expert verification of generated analysis, source traceability, jurisdiction-specific accuracy, translation and speech quality, retrieval grounding, and performance under load. Each draft entry should be confirmed by executing the corresponding test and recording the observed outcome before the results are presented as verified. LexiClear remains an information-access and comprehension aid and not a substitute for qualified legal advice.
-
+The failures point to what needs doing next: better OCR on poor scans, complete and expert-checked analysis, source traceability, jurisdiction-specific accuracy, translation and speech quality, stronger retrieval grounding, and testing under load. Each draft entry should be confirmed by running the test and recording what actually happens before the results are presented as verified. LexiClear remains an aid for finding and understanding information in documents, and it is not a substitute for qualified legal advice.
 
 
 \chapter{Limitations and Future Scope}
 
 \section{Limitations}
-The current implementation and evaluation have several limitations. These limitations are important when interpreting the reported results and defining the scope of the conclusions drawn from the project.
+LexiClear works, but it has limits, and they affect how far the results in this report can be trusted. We list them here so the reader knows what the evaluation does and does not show.
 
-First, the evaluation was conducted using a limited set of legal documents and document-specific questions. The RAG and question-answer evaluations were performed on 80 questions, which provides a basis for examining system behaviour but does not represent the full diversity of legal and administrative documents encountered in real-world applications. Different document types, layouts, writing styles, clause structures, and levels of complexity may produce different results. Second, the current evaluation does not use a large expert-annotated legal benchmark. The expected answers used for question-answer evaluation provide reference points for automated comparison, but they do not replace assessment by qualified legal or domain experts. Consequently, the reported semantic similarity and BERTScore values indicate correspondence with the evaluation references rather than independently establishing legal correctness.
+The first is the size of the evaluation. We tested on a small set of legal documents and 80 document-specific questions. That is enough to see how the system behaves, but real legal and administrative paperwork varies a great deal in layout, writing style, clause structure and difficulty, and other documents could give different results. The second is that we had no large expert-annotated benchmark. Our expected answers were written from the documents themselves, so they are useful reference points for automated comparison, but they are not a lawyer's judgement. A high semantic similarity or BERTScore tells us an answer resembles the reference. It does not tell us the answer is legally correct.
 
-Another limitation concerns OCR and document extraction. The system supports OCR processing for scanned or image-based documents, but a separate controlled evaluation of OCR accuracy was not conducted. Extraction errors can affect later preprocessing, chunking, retrieval, and response generation. Therefore, the quality of the final response may depend partly on the quality and structure of the text obtained from the original document. The jurisdiction grounding functionality is also currently evaluated primarily from an integration perspective. Although jurisdictional information can be incorporated into the response-generation workflow, a controlled benchmark for measuring jurisdiction-specific legal accuracy was not established. Legal requirements may vary between jurisdictions and may also change over time, making reliable jurisdiction-specific evaluation an important requirement for future development.
+OCR is the third. LexiClear can read scanned and image-based documents, but we never measured OCR accuracy separately. A misread character at the extraction stage can carry through to chunking, retrieval and the final response, so the quality of an answer partly depends on how clean the text was when it came out of the original file. Jurisdiction grounding has a similar gap. We showed that jurisdictional information can be passed into response generation, but we had no benchmark for judging whether the jurisdiction-specific statements are accurate. Laws differ between places and change over time, which makes that kind of evaluation both important and hard.
 
-The multilingual functionality has a similar limitation. LexiClear supports English, Hindi, and Kannada output, but a controlled evaluation involving expert linguistic assessment or standardized translation metrics was not conducted. The current results therefore establish functional multilingual support rather than a comprehensive measurement of translation quality. The text-to-speech component was also evaluated functionally rather than through a formal speech-quality benchmark. The system successfully generated speech output during development testing, including Kannada WAV generation using the available configuration. However, speech quality, pronunciation of legal terminology, intelligibility, and consistency across all supported languages were not systematically measured.
 
-Finally, the system is intended as an information-access and comprehension aid rather than a replacement for professional legal advice. Generated summaries, explanations, identified risks, and answers may require verification against the original document and, where appropriate, consultation with a qualified professional. The current evaluation therefore does not establish that the system can independently determine legal validity, provide authoritative legal interpretation, or replace professional legal decision-making.
+Finally, LexiClear is a tool for understanding documents and finding information in them. It is not a replacement for professional legal advice. Its summaries, explanations, risks and answers should be checked against the original document, and against a qualified professional where the stakes are real. Nothing in our evaluation shows that the system can decide legal validity or give an authoritative interpretation on its own.
 
 \section{Future Scope}
 
-A major area for future work is the development of a larger and more diverse evaluation dataset. The dataset can include a wider range of legal and administrative documents, including employment agreements, rental agreements, mortgage documents, notices, applications, and other commonly encountered document types. Expert-annotated questions and reference answers could also be introduced to provide a stronger basis for evaluating retrieval and answer quality.
+The most obvious next step is a bigger and more varied dataset. It could include employment agreements, rental agreements, mortgage documents, notices, application forms and other documents people commonly meet, with questions and reference answers written or checked by experts. That would give a much firmer basis for judging retrieval and answer quality.
 
-Future work can also improve the document-processing pipeline by evaluating extraction and OCR performance separately. Documents with verified ground-truth text could be used to measure extraction quality, while different document layouts and scan qualities could be tested to determine how preprocessing affects downstream retrieval. The retrieval component can be further investigated through systematic experiments involving different chunk sizes, overlap strategies, embedding models, retrieval configurations, and reranking approaches. The existing per-question evaluation graphs provide a useful starting point for identifying queries where retrieval behaviour can be improved. Another important direction is stronger evaluation of source grounding. Future experiments can examine whether every important statement in a generated response can be traced back to the uploaded document and retrieved evidence. Citation or source-reference mechanisms could also be introduced so that users can directly identify the clause or document section supporting an answer.
+The document-processing pipeline can be tested more carefully too. Extraction and OCR should be evaluated on their own, using documents with verified ground-truth text and a range of layouts and scan qualities, so we can see how preprocessing affects retrieval later. The retrieval component also leaves room for experiments with chunk size, overlap, embedding models, retrieval settings and reranking. The per-question graphs from Chapter~4 are a good place to start, since they show which queries retrieval handles badly.
 
-Jurisdiction grounding can be extended by incorporating more structured and reliable jurisdiction-specific information. Future versions could evaluate the system across multiple jurisdictions and document types, while separately measuring whether jurisdiction-specific responses remain consistent with the supporting legal sources. The multilingual component can also be expanded beyond the current English, Hindi, and Kannada support. Future evaluation can include expert linguistic review, terminology consistency, and measurements of translation quality for legal and administrative terminology. Additional Indian languages could also be considered to improve accessibility for a wider range of users. Further development of the text-to-speech component could focus on pronunciation, intelligibility, and legal terminology across supported languages. User-based accessibility studies could help determine whether speech output and multilingual interaction actually improve document comprehension and ease of use.
+Source grounding needs more attention as well. We would like to check whether every important statement in a response can be traced back to the uploaded document and the retrieved passages. Adding citations or source references, so a user can see which clause or section supports an answer, would address this directly and would also fix the traceability failure in test case TC11.
 
-Finally, future work can include a systematic usability evaluation involving users with different levels of familiarity with legal documents. Such studies could examine whether the summaries, explanations, question-answering, multilingual output, and speech features reduce the effort required to understand formal documents. This would complement the current technical evaluation by providing evidence about the practical usability of the system. Taken together, these future directions can extend LexiClear from a functional prototype and evaluation framework toward a more extensively validated document-understanding system. The emphasis should remain on reliable source grounding, transparent limitations, expert evaluation, accessibility, and careful validation before applying the system to real-world legal decision-making.
+Jurisdiction grounding could draw on more structured and more reliable jurisdiction-specific information, and later versions could be tested across several jurisdictions and document types, checking whether the responses stay consistent with the legal sources behind them. On the language side, we could go beyond English, Hindi and Kannada by adding more Indian languages, and bring in expert linguistic review and checks on terminology consistency. The text-to-speech component could be improved for pronunciation, clarity and the way legal terms are spoken. Studies with real users would show whether audio and multilingual output actually help people understand documents.
+
+Last, we would like to run a proper usability study with people who have different levels of familiarity with legal documents, to see whether the summaries, explanations, question answering, translations and speech reduce the effort of reading formal paperwork. This would sit alongside the technical evaluation and tell us whether the system helps in practice. If all of this is done, LexiClear can move from a working prototype to something more thoroughly validated. Reliable source grounding, honesty about limitations, expert review and careful validation should come before anyone relies on it for real legal decisions.
 
 \chapter{Conclusion}
 
-LexiClear was developed as an AI-assisted legal and administrative document-understanding system aimed at making complex formal documents easier for non-expert users to access and understand. The system combines document processing, semantic retrieval, Retrieval-Augmented Generation (RAG), jurisdiction grounding, structured analysis, multilingual translation, and text-to-speech within a single workflow. This integration addresses the difficulty users may face when locating and understanding important information such as clauses, obligations, rights, risks, and required actions in lengthy legal and administrative documents.
+We built LexiClear to help ordinary people understand legal and administrative documents that are hard to read. It brings document processing, semantic retrieval, Retrieval-Augmented Generation, jurisdiction grounding, structured analysis, multilingual translation and text-to-speech into one workflow. The aim was simple: someone holding a long agreement or notice should be able to find its clauses, obligations, rights, risks and required actions without wading through every page.
 
+Jurisdiction grounding adds context to the responses where the right answer depends on where a document applies. The structured analysis sorts what the system finds into a summary, key clauses, risks, obligations, rights and required actions. With Ask LexiClear, users can then put their own questions to the document and get answers drawn from it.
 
-The system also incorporates jurisdiction grounding to provide additional contextual information during response generation. The structured analysis functionality organizes generated information into categories such as summary, key clauses, risks, obligations, rights, and required actions. Through the Ask LexiClear facility, users can further interact with the processed document by submitting specific questions and obtaining document-grounded responses.
+Accessibility was part of the design from the beginning. Output is available in English, Hindi and Kannada, and the text-to-speech controls let people listen instead of reading. Our functional testing showed that the main parts work together: we analysed a rental agreement, used the upload and question-answering features through the frontend, and generated Kannada speech.
 
-Accessibility is further supported through multilingual output in English, Hindi, and Kannada, along with text-to-speech functionality. The integration of translation and speech output provides users with alternative ways of accessing generated information. Functional testing demonstrated successful integration of the major components, including document analysis of a rental agreement, frontend interaction with upload and question-answering features, and generation of Kannada speech output.
+The project has limits, and they matter. Our testing was not a large-scale quantitative evaluation, and we do not yet have an expert-annotated benchmark, so we cannot give formal accuracy, precision, recall or translation-quality figures that apply beyond our test set. Jurisdiction grounding and the generated explanations also depend on how good the configured contextual information is.
 
-The project also has limitations that should be considered when interpreting the results. The available testing does not constitute a large-scale quantitative evaluation, and an expert-annotated benchmark dataset has not yet been established. Therefore, the system's performance cannot be represented through formal accuracy, precision, recall, translation-quality, or similar statistical measures at this stage. In addition, jurisdiction grounding and generated explanations depend on the quality and availability of the configured contextual information.
+LexiClear is meant to help people read and understand documents. It does not replace qualified legal advice or authoritative legal interpretation. The next steps we see are clause-level source traceability, broader jurisdiction-specific resources, more Indian languages, voice input, document comparison, expert-annotated evaluation datasets, and more thorough usability and performance testing.
 
-The system is intended as a document comprehension and information-access aid, rather than a replacement for qualified legal advice or authoritative legal interpretation. Future development can focus on stronger source and clause-level traceability, broader jurisdiction-specific resources, additional Indian languages, voice-based input, document comparison, expert-annotated evaluation datasets, and more comprehensive usability and performance testing.
 
 \newpage
 \addcontentsline{toc}{chapter}{\protect\numberline{}{\bfseries Bibliography}}
